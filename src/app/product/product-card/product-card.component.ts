@@ -3,6 +3,8 @@ import { ProductCardModel } from '../_model/product.model';
 import { ProductService } from '../_service/product.service';
 import { Subscription, first } from 'rxjs';
 import { ProductFilterModel } from '../_model/product-filter.model';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-card',
@@ -17,7 +19,8 @@ export class ProductCardComponent implements OnInit {
   private unsubscribe: Subscription[] = [];
   filter: ProductFilterModel;
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService,
+    private router: Router,) {
 
 
   }
@@ -39,18 +42,16 @@ export class ProductCardComponent implements OnInit {
     //   });
     // this.unsubscribe.push(subscr);
   }
-  listProducts() {
-    this.hasError = false;
-    const subscr = this.productService
-      .listProducts(this.filter)
-      .pipe(first())
-      .subscribe((result: any) => {
-        if (result) {
-          this.model = result.products
-        } else {
-          this.hasError = true;
-        }
-      });
-    this.unsubscribe.push(subscr);
+ 
+  tryAR() {
+    this.router.navigate(['/tryAR']);
   }
+  getPictureUrl(imageUrl: string) {
+    const apiUrl = `${environment.apiUrl}Files`
+    if (!imageUrl) {
+      return "none";
+    }
+    return `${apiUrl}/${imageUrl}`;
+  }
+
 }

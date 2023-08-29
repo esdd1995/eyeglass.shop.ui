@@ -1,0 +1,9 @@
+<video #videoElement [srcObject]="videoStream" autoplay></video>
+<div class="row">
+    <div class="col-1">
+        <button class="btn btn-primary" (click)="startRecording()" [disabled]="isRecording">
+            <span *ngIf="!isRecording">Record</span>
+            <span *ngIf="isRecording">Stop</span>
+        </button>
+    </div>
+</div>

@@ -7,7 +7,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { ProductCardComponent } from './product/product-card/product-card.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { VideoCaptureComponent } from './video-capture/video-capture.component';
+import { HttpHeadersInterceptor } from './http-headers.interceptor';
 
 @NgModule({
   declarations: [
@@ -18,14 +20,19 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     FooterComponent,
     ProductDetailComponent,
-    ProductCardComponent 
+    ProductCardComponent,
+    VideoCaptureComponent 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpHeadersInterceptor,
+    multi: true,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

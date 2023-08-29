@@ -4,13 +4,13 @@
         <p class="text-end text-dark mb-1 fs-9">
             {{model.price}}</p>
     </div>
-    <div class="col-12 d-flex justify-content-center"><img [src]="model.imageUrl"
+    <div class="col-12 d-flex justify-content-center"><img [src]="getPictureUrl(model.imageUrl)"
             class="img-resize" alt="">
 
     </div>
     <div class="row d-flex justify-content-between">
         <div class="col-6 text-end">
-            <button class="btn btn-light bordered1 fs-9">مجازی امتحان کن</button>
+            <button (click)="tryAR()" class="btn btn-light bordered1 fs-9">مجازی امتحان کن</button>
         </div>
         <div class="col-4 mt-2 d-flex justify-content-end">
             <div class="row ">

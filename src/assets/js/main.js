@@ -130,24 +130,10 @@
 
     // Testimonials carousel
     $(document).ready(function () {
-        $(".testimonial-carousel").owlCarousel({
-            autoplay: true,
-            smartSpeed: 1000,
-            center: true,
-            dots: true,
-            loop: true,
-            nav: false,
-            rtl: true,
-
-            responsive: {
-                0: {
-                    items: 1
-                },
-                768: {
-                    items: 3
-                }
-            }
-        });
+        setTimeout(() => {
+            
+        }, 5000);
+       
     });
 
     // Modal Video
