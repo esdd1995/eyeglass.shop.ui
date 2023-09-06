@@ -130,8 +130,36 @@
             });
         }
     });
-
-
+    $(document).ready(function () {
+        // Function to move the indicator to the target element
+        function moveIndicator(targetElement) {
+            const indicator = $('#nav-indicator');
+            const targetPosition = targetElement.position().left;
+            const targetWidth = targetElement.outerWidth();
+            
+            indicator.css({
+                'left': targetPosition + 'px',
+                'width': targetWidth + 'px',
+            });
+        }
+    
+        // Handle hover events for indicator-target class
+        $('.indicator-target').on({
+            mouseenter: function () {
+                moveIndicator($(this));
+            },
+            touchstart: function () {
+                moveIndicator($(this));
+            },
+            mouseleave: function () {
+                // Handle mouseleave if needed
+            }
+        });
+    
+        // Initialize the indicator under the active nav item
+        moveIndicator($('.nav-item.nav-link.active'));
+    });
+    
 
     //faq
     const questions = document.getElementsByClassName('accordion-title')//Gets all the questions (plus icon)
