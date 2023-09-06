@@ -27,25 +27,38 @@ export class VideoCaptureComponent implements OnInit {
   productId: number
   uniqueName: string
   private unsubscribe: Subscription[] = [];
-  isLoading$: Observable<boolean>;
+  isRendering: boolean = false
   captureTimeInSec: number = 4;
+  videoTracks: MediaStreamTrack[] | null;
   constructor(private productService: ProductService, 
     private route: ActivatedRoute,
     private router: Router) {
-    this.isLoading$ = this.productService.isLoading$;
     this.route.params.subscribe(params => { this.productId = +params['productId'] });
   }
 
   async ngOnInit() {
+    await this.startVideoStream();
+    this.maskedImageModel = new TryArMaskedModel()
+    this.setUniqueName()
+    this.getRawImageModelFromLocal() 
+  }
+  private async startVideoStream() {
     try {
       this.videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+      this.videoTracks = this.videoStream.getTracks();
       this.videoElement.nativeElement.srcObject = this.videoStream;
     } catch (err) {
       console.error('Error accessing camera:', err);
     }
-    this.maskedImageModel = new TryArMaskedModel()
-    this.setUniqueName()
-    this.getRawImageModelFromLocal() 
+  }
+
+  stopVideoStream() {
+    if (this.videoTracks) {
+      this.videoTracks.forEach((track) => {
+        track.stop(); // Stop each track
+      });
+      this.videoTracks = null; // Clear the reference to tracks
+    }
   }
   setUniqueName() {
     var un_local = localStorage.getItem("uniqueName")
@@ -91,6 +104,7 @@ export class VideoCaptureComponent implements OnInit {
   }
 
   stopCapturing(captureInterval: number) {
+    this.stopVideoStream()
     clearInterval(captureInterval);
     console.log('Capture complete. Sending photos to endpoint...');
     this.sendPhotosToEndpoint(this.capturedPhotos);
@@ -110,6 +124,7 @@ export class VideoCaptureComponent implements OnInit {
     }, 'image/jpeg', 0.9); // You can adjust the format and quality as needed
   }
   sendPhotosToEndpoint(photos: Blob[]) {
+    this.isRendering = true
     // Create an array of File objects from the captured photos
     const files: File[] = photos.map((blob, index) => {
       const fileName = `photo_${index + 1}.jpg`; // You can generate unique file names
@@ -142,6 +157,7 @@ export class VideoCaptureComponent implements OnInit {
           this.maskedImageModel.productId = this.productId
           this.setMaskedImageModelLocal()
           console.log(this.maskedImageModel,this.rawImageModel)
+          this.isRendering = false
           this.goToDetail()
         }
       }, err => {
