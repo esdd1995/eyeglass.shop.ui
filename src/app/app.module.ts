@@ -10,7 +10,8 @@ import { ProductCardComponent } from './product/product-card/product-card.compon
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { VideoCaptureComponent } from './video-capture/video-capture.component';
 import { HttpHeadersInterceptor } from './http-headers.interceptor';
-
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { PersianNumberPipe } from './persian-number.pipe';
 @NgModule({
   declarations: [
     
@@ -21,12 +22,14 @@ import { HttpHeadersInterceptor } from './http-headers.interceptor';
     FooterComponent,
     ProductDetailComponent,
     ProductCardComponent,
-    VideoCaptureComponent 
+    VideoCaptureComponent,
+    ProductListComponent,
+    PersianNumberPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

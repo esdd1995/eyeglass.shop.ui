@@ -4,6 +4,7 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
+  HttpHeaders,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -15,6 +16,16 @@ export class HttpHeadersInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
       // Check if the request body is an object
+      if (req.body instanceof FormData) {
+        // Clone the request and set the necessary headers for file upload
+        const cloned = req.clone({
+          headers: new HttpHeaders({
+            Accept: 'application/json',
+          }),
+        });
+  
+        return next.handle(cloned);
+      }
       if (typeof req.body === 'object' && req.body !== null) {
         // Define your common headers
         const headers = req.headers

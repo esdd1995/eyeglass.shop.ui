@@ -1,29 +1,70 @@
-<div class="row">
+<div *ngIf="theme == 'main'" class="row p-3" style="min-height: 25rem;">
     <div class="col-12 text-left">
         <p class="text-end text-dark mb-1 fs-9">{{model.titleFa}}</p>
         <p class="text-end text-dark mb-1 fs-9">
-            {{model.price}}</p>
+            {{model.mainPrice | persianNumberWithSeperator}} ريال </p>
     </div>
-    <div class="col-12 d-flex justify-content-center"><img [src]="getPictureUrl(model.imageUrl)"
-            class="img-resize" alt="">
+    <div (click)="goToDetail()" style="cursor: pointer;" class="col">
+        <div class="d-flex justify-content-center">
+            <img [src]="getPictureUrl(model.imageUrl)" class="img-resize m-3" alt="">
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="row d-flex justify-content-between">
+            <div class="col col-3 text-end">
+                <button (click)="tryAR()" class="min-w-200 btn btn-light bordered1 fs-9">مجازی امتحان کن</button>
+            </div>
+            <div class="col-4 mt-2 d-flex justify-content-left">
+                <div class="row ">
+                    <div *ngFor="let color of model.colors" class="col-1 px-2 text-start">
+                        <div [ngStyle]="{'background-color':color}" class="circle-color"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="min-height: 50rem;" *ngIf="theme == 'list'" (click)="goToDetail()" style="cursor: pointer;"
+    class="mx-2 p-2 rounded1 shadow bg-grey">
+    <div class="card-image-container">
+        <img [src]="getPictureUrl(model.imageUrl)" class="img-fluid p-1" alt="">
 
     </div>
     <div class="row d-flex justify-content-between">
-        <div class="col-6 text-end">
-            <button (click)="tryAR()" class="btn btn-light bordered1 fs-9">مجازی امتحان کن</button>
-        </div>
-        <div class="col-4 mt-2 d-flex justify-content-end">
-            <div class="row ">
-                <div class="col-1 px-2 text-start">
-                    <div class="circle2"></div>
-                </div>
-                <div class="col-1 px-2 text-start">
-                    <div class="circle1"></div>
-                </div>
-                <div class="col-1 px-2 text-start">
-                    <div class="circle3"></div>
+        <div class="col-3 mx-1">
+            <div class="row">
+                <div *ngFor="let color of model.colors" class="col-1">
+                    <div [ngStyle]="{'background-color':color}" class="circle-color"></div>
                 </div>
             </div>
+        </div>
+        <div class="col-3">
+            <div class="row">
+                <div class="col-1">
+                    <img src="../../../assets/img/icon/i2.png" class="icon-resize px-2" alt="">
+                </div>
+                <div class="col-1">
+                    <img src="../../../assets/img/icon/i7.png" class="icon-resize px-2" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex  mx-3 justify-content-between">
+        <div class="">
+            <p class="text-dark mb-1 mt-3 fs-9">
+                {{model.titleFa}}
+            </p>
+            <p class="text-dark fs-10">
+
+                {{model.mainPrice | persianNumberWithSeperator}} ريال
+            </p>
+        </div>
+        <div class="text-start">
+            <button (click)="tryAR()" class="btn btn-white mt-4 bordered1 fs-9">مجازی امتحان کن</button>
+
         </div>
     </div>
 </div>

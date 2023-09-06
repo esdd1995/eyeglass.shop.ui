@@ -1,201 +1,199 @@
+<body>
+  <div class="container-fluid bg-grey py-1">
+    <div class="container">
+      <div class="row g-5 py-1 d-flex justify-content-center d-flex">
+        <div class="col-md-6 p-2 wow fadeIn justify-content-center" data-wow-delay="0.5s">
+          <div class="row d-flex justify-content-center">
+            <img id="main-image" alt="main_image" class="w-500" [src]="mainImageUrl" />
+          </div>
+          <div class="row mt-3">
+            <div class="thumbnail text-center m-2 p-2">
+              <img *ngFor="let item of model.galleries;" (click)="setMainImageUrl(item.url)" [alt]="item.description"
+                [src]="getPictureUrl(item.url)" class="my-2 border-1 p-1 w-170">
+              <img *ngIf="haveMaskeModel" (click)="myDialog.show()" alt="ar"
+                src="../../../assets/img/face-recog-image.png" class="my-2 border-1 p-1 w-170">
+            </div>
+            <dialog #myDialog style="max-width: 40rem; min-height: 50%;" class="p-2 m-2">
+              <div #scrollableDiv (wheel)="onScroll($event)" (touchmove)="onGesture($event)"
+                class="d-flex justify-content-center">
+                <img [src]="getPictureUrl(mainMaskedUrl)" class="my-2 border-1 p-1"
+                  style="max-width: 90%; border-radius: 1rem;">
+              </div>
+              <button class="fill-cont btn btn-primary" (click)="myDialog.close()">
+                بستن
+              </button>
+            </dialog>
+          </div>
+        </div>
+        <div class="col-md-6 pt-2 mt-5">
+          <p class="text-dark pt-1 mb-2 fs-7">{{model.titleFa}}</p>
+          <p class="text-grey fs-9">{{model.categoryName}} {{model.brandName}} {{selectedPrice.productColorName}}</p>
+          <form action="">
+            <p class="text-dark fs-7 mb-0">{{selectedPrice.mainPrice | persianNumberWithSeperator}} {{'ریال'}}</p>
 
-  <html lang="en" dir="rtl">
-    <body>
-        <div class="container-fluid bg-grey py-1">
-            <div class="container">
-              <div class="row g-5 py-1 d-flex justify-content-center">
-                <div class="col-md-6 p-5 wow fadeIn" data-wow-delay="0.5s">
-                  <img id="main-image" class="w-500" src="../../../assets/img/g2.png" />
-        
-                  <div class="row mt-4">
-                    <div class="thumbnail text-center">
-                      <img onclick="change_image(this)" src="../../../assets/img/g2.png" class="my-2 border-1 p-1 w-170">
-                      <img onclick="change_image(this)" src="../../../assets/img/g4.png" class="my-2 border-1 p-1 w-170">
-                      <img onclick="change_image(this)" src="../../../assets/img/g3.png" class="my-2 border-1 p-1 w-170">
-                    </div>
-                  </div>
+            <div class="col-4 mt-2 d-flex justify-content-start">
+              <div class="row ">
+                <div *ngFor="let price of model.prices" class="col-1 px-2 text-start">
+                  <div (click)="selectedPrice = price" [ngStyle]="{'background-color': price.productColorCode}"
+                    class="circle-color"></div>
                 </div>
-                <div class="col-md-6 pt-5 mt-5">
-                  <p class="text-dark pt-5 mb-2 fs-7">عینک سنت میشل</p>
-                  <p class="text-grey fs-9">عینک گرد رزگلد با فریم فلزی</p>
-                  <form action="">
-                    <p class="text-dark fs-7 mb-0">۱٬۲۵۰٬۰۰۰ تومان</p>
-        
-                    <div class="col-4 mt-2 d-flex justify-content-start">
-                      <div class="row ">
-                        <div class="col-1 px-2 text-start">
-                          <div class="circle2"></div>
-                        </div>
-                        <div class="col-1 px-2 text-start">
-                          <div class="circle1"></div>
-                        </div>
-                        <div class="col-1 px-2 text-start">
-                          <div class="circle3"></div>
-                        </div>
-                      </div>
-                    </div>
-        
-                  </form>
-                  <div class="pr-5">
-                    <div class="border-bottom py-3"></div>
-                  </div>
-                  <div class="row mt-3">
-                    <div class="col-md-7">
-                      <button class="fill-cont btn btn-primary">اضافه کردن به سبد خرید</button>
-                    </div>
-                    <div class="col-md-2 px-1 text-center bg-primary border-1">
-                      <div class="number">
-                        <span class="minus text-white">-</span>
-                        <input type="text" class="w-50 border-0 text-center bg-primary text-white" value="1" />
-                        <span class="plus text-white">+</span>
-                      </div>
-                    </div>
-                  </div>
-        
-                </div>
+
               </div>
             </div>
+
+          </form>
+          <div class="pr-5">
+            <div class="border-bottom py-3"></div>
           </div>
-        
-          <div class="container-fluid my-5 ">
-            <div class="container mb-5">
-              <div class="row m-p-5">
-                <div class="container">
-                  <ul id="myTabs" class="nav nav-pills nav-justified px-0 py-3 border-bottom" role="tablist" data-tabs="tabs">
-                    <li class=""><a href="#Commentary" data-bs-toggle="tab">توضیحات</a></li>
-                    <li class=" px-3 mx-2"><a href="#Videos" data-bs-toggle="tab">جزئیات</a></li>
-                    <li class=" px-3"><a href="#andaze" data-bs-toggle="tab">اندازه‌های عینک</a></li>
-                  </ul>
-                  <div class="tab-content py-3 mb-5">
-                    <div role="tabpanel" class="tab-pane fade in show active" id="Commentary">
-                      <p class="text-dark fs-7">عدسی Blue Control شرکت Hoya ژاپن</p>
-                      <p class="text-dark fs-9 pb-5">شرکت هویا عدسی عینک مخصوص ابزار دیجیتال خود را فقط با ایندکس 1.50 وارد
-                        بازار
-                        کرده است. عدسی فوق دارای برترین پوشش جهان
-                        بوده، بسیار شفاف است و خیلی راحت تمیز می شود. برای کسب اطلاعات بیشتر در مورد این عدسی با ما همراه باشید.
-                      </p>
-        
-        
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="Videos">
-                      <p class="text-dark fs-7">عدسی Blue Control شرکت Hoya ژاپن</p>
-                      <p class="text-dark fs-9">نوع عینک: طبی</p>
-                      <p class="text-dark fs-9">سایز: کوچک | 48 □19-140</p>
-                      <p class="text-dark fs-9">وزن فریم: ۱۵ گرم</p>
-                      <p class="text-dark fs-9">جنس فریم: فلز</p>
-                      <p class="text-dark fs-9">شکل فریم: گرد</p>
-                      <p class="text-dark fs-9">قاب: دورقاب</p>
-                      <p class="text-dark fs-9">کشور سازنده: ایتالیا</p>
-                      <p class="text-dark fs-9">رنگ: رزگلد</p>
-                      <p class="text-dark fs-9">پوشش لنز ضد خش</p>
-                      <p class="text-dark fs-9">درمورد سایز عینک مطمئن نیستی؟ <span class="underline"><a href=""
-                            class="underline fs-9 border-bottom">
-                            راهنمای سایز عینک
-                          </a></span></p>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="andaze">
-                      <div class="row pt-4">
-                        <div class="col-md-6">
-                          <p class="text-dark fs-9">طول دسته: ۵۰</p>
-                          <p class="text-dark fs-9">پل روی بینی: ۲۰</p>
-                          <p class="text-dark fs-9">طول عدسی: ۱۴۰</p>
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./../../../assets/img/len5.png" class="icon-resize4" alt="">
-                        </div>
-                        <div class="col-md-3">
-                          <img src="./../../../assets/img/len6.png" class="icon-resize4" alt="">
-                        </div>
-                      </div>
-                      <div class="row pt-4 border-top1">
-                        <div class="col-md-8">
-                          <p class="text-dark fs-7">راهنمای تعیین پهنای صورت</p>
-                          <p class="text-dark fs-9">مانند تصویر لبه بلند کارت اعتباری را روی صورت خود قرار دهید تا موازی با مرکز
-                            بینی شما باشد:
-                            <br>
-                            سایز S: عرض کارت به راحتی به انتهای چشم شما می‌رسد و حتی از آن عبور می‌کند.
-                            <br>
-        
-                            سایز M: انتهای کارت تا انتهای چشم شما را پوشش می‌دهد.
-                            <br>
-        
-                            سایز L: کارت به انتهای چشم شما نمی‌رسد.
-                            <br>
-        
-                            این ترفند هنگام خرید کمک می‌کند عینکی انتخاب کنیم که برای پهنای صورت ما کوچک یا بزرگ نباشد و در
-                            استفاده از آن دچار مشکل
-                            نشویم.
-                          </p>
-                        </div>
-                        <div class="col-md-4">
-                          <img src="./../../../assets/img/len4.png" class="img-fluid" alt="">
-                        </div>
-        
-                      </div>
-        
-                    </div>
-                  </div>
-                </div>
+          <div class="row mt-3">
+            <div class="col-md-5">
+              <button class="fill-cont btn btn-primary mt-1">اضافه کردن به سبد خرید</button>
+            </div>
+            <div class="col-md-4">
+              <button (click)="tryAR()" class="fill-cont btn btn-primary mt-1">مجازی امتحان کن</button>
+            </div>
+            <!-- <div class="col-md-3 px-1 text-center bg-primary border-1">
+              <div class="number">
+                <span class="minus text-white">-</span>
+                <input type="text" class="w-50 border-0 text-center bg-primary text-white" value="1" />
+                <span class="plus text-white">+</span>
+              </div>
+            </div> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid my-5 ">
+    <div class="container mb-5">
+      <div class="row m-p-5">
+        <div class="container">
+          <ul id="myTabs" class="nav nav-pills nav-justified px-0 py-3 border-bottom" role="tablist" data-tabs="tabs">
+            <li class=""><a href="#Commentary" data-bs-toggle="tab">توضیحات</a></li>
+            <li class=" px-3 mx-2"><a href="#Videos" data-bs-toggle="tab">جزئیات</a></li>
+            <li class=" px-3"><a href="#andaze" data-bs-toggle="tab">اندازه‌های عینک</a></li>
+          </ul>
+          <div class="tab-content py-3 mb-5">
+            <div role="tabpanel" class="tab-pane fade in show active" id="Commentary">
+              <div *ngFor="let review of model.reviews" class="d-block">
+                <p class="text-dark fs-7">{{review.articleTitle}}</p>
+                <div [innerHtml]="sanitizedArticleDescription(review.articleDescription)"></div>
+                <!-- <p class="text-dark fs-9 pb-5">{{review.articleDescription}}</p> -->
               </div>
             </div>
-          </div>
-        
-        
-          <div class="container-fluid bg-grey py-2 my-5">
-            <div class="container mt-5">
-              <div class="row d-flex justify-content-center mt-5">
-                <div class="col-md-7">
-                  <div class="row d-flex justify-content-center">
-        
-                    <div class="col-md-4">
-                      <p class="text-dark fs-9">خرید به صرفه و با کیفیت <span><img src="../../../assets/img/icon/i8.png"
-                            class="icon-resize  ps-2 pe-2 border-right1" alt="">
-                        </span></p>
-        
-                    </div>
-                    <div class="col-md-3">
-                      <p class="text-dark fs-9">تنوع و راحتی در انتخاب<span><img src="../../../assets/img/icon/i9.png"
-                            class="icon-resize ps-3 pe-2 border-right1" alt="">
-                        </span></p>
-        
-                    </div>
-                    <div class="col-md-3">
-                      <p class="text-dark fs-9 mx-2">ضمانت اصالت کالا <span><img src="../../../assets/img/icon/i10.png"
-                            class="icon-resize  ps-3 pe-2" alt="">
-                        </span></p>
-        
-                    </div>
-                  </div>
+            <div role="tabpanel" class="tab-pane fade" id="Videos">
+              <p class="text-dark fs-7">{{model.titleFa}}</p>
+              <p *ngFor="let property of model.properties" class="text-dark fs-9">{{property.propertyName}}:
+                {{property.value}}</p>
+              <p class="text-dark fs-9">درمورد سایز عینک مطمئن نیستی؟ <span class="underline"><a href=""
+                    class="underline fs-9 border-bottom">
+                    راهنمای سایز عینک
+                  </a></span></p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="andaze">
+              <div class="row pt-4">
+                <div class="col-md-6">
+                  <p class="text-dark fs-9">طول دسته: ۵۰</p>
+                  <p class="text-dark fs-9">پل روی بینی: ۲۰</p>
+                  <p class="text-dark fs-9">طول عدسی: ۱۴۰</p>
+                </div>
+                <div class="col-md-3">
+                  <img src="./../../../assets/img/len5.png" class="icon-resize4" alt="">
+                </div>
+                <div class="col-md-3">
+                  <img src="./../../../assets/img/len6.png" class="icon-resize4" alt="">
                 </div>
               </div>
+              <div class="row pt-4 border-top1">
+                <div class="col-md-8">
+                  <p class="text-dark fs-7">راهنمای تعیین پهنای صورت</p>
+                  <p class="text-dark fs-9">مانند تصویر لبه بلند کارت اعتباری را روی صورت خود قرار دهید تا موازی با مرکز
+                    بینی شما باشد:
+                    <br>
+                    سایز S: عرض کارت به راحتی به انتهای چشم شما می‌رسد و حتی از آن عبور می‌کند.
+                    <br>
+
+                    سایز M: انتهای کارت تا انتهای چشم شما را پوشش می‌دهد.
+                    <br>
+
+                    سایز L: کارت به انتهای چشم شما نمی‌رسد.
+                    <br>
+
+                    این ترفند هنگام خرید کمک می‌کند عینکی انتخاب کنیم که برای پهنای صورت ما کوچک یا بزرگ نباشد و در
+                    استفاده از آن دچار مشکل
+                    نشویم.
+                  </p>
+                </div>
+                <div class="col-md-4">
+                  <img src="./../../../assets/img/len4.png" class="img-fluid" alt="">
+                </div>
+
+              </div>
+
             </div>
           </div>
-        <script>
-            $(document).ready(function () {
-              $('.minus').click(function () {
-                var input = $(this).next('input[type="text"]');
-                var value = parseInt(input.val());
-                if (value > 1) {
-                  input.val(value - 1);
-                }
-              });
-        
-              $('.plus').click(function () {
-                var input = $(this).prev('input[type="text"]');
-                var value = parseInt(input.val());
-                input.val(value + 1);
-              });
-            });
-          </script>
-          <script type="text/javascript">
-            function change_image(image) {
-              var image_container = document.getElementById("main-image");
-        
-        
-              image_container.src = image.src;
-        
-            };
-        
-          </script>
-    </body>
-  </html>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid bg-grey py-2 my-5">
+    <div class="container mt-5">
+      <div class="row d-flex justify-content-center mt-5">
+        <div class="col-md-7">
+          <div class="row d-flex justify-content-center">
+
+            <div class="col-md-4">
+              <p class="text-dark fs-9">خرید به صرفه و با کیفیت <span><img src="../../../assets/img/icon/i8.png"
+                    class="icon-resize  ps-2 pe-2 border-right1" alt="">
+                </span></p>
+
+            </div>
+            <div class="col-md-3">
+              <p class="text-dark fs-9">تنوع و راحتی در انتخاب<span><img src="../../../assets/img/icon/i9.png"
+                    class="icon-resize ps-3 pe-2 border-right1" alt="">
+                </span></p>
+
+            </div>
+            <div class="col-md-3">
+              <p class="text-dark fs-9 mx-2">ضمانت اصالت کالا <span><img src="../../../assets/img/icon/i10.png"
+                    class="icon-resize  ps-3 pe-2" alt="">
+                </span></p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('.minus').click(function () {
+        var input = $(this).next('input[type="text"]');
+        var value = parseInt(input.val());
+        if (value > 1) {
+          input.val(value - 1);
+        }
+      });
+
+      $('.plus').click(function () {
+        var input = $(this).prev('input[type="text"]');
+        var value = parseInt(input.val());
+        input.val(value + 1);
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    function change_image(image) {
+      var image_container = document.getElementById("main-image");
+
+
+      image_container.src = image.src;
+
+    };
+
+  </script>
+</body>

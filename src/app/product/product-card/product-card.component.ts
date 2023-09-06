@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 
 export class ProductCardComponent implements OnInit {
   @Input() model: ProductCardModel
+  @Input() theme: string = 'main'
   @Input() productId: number
   hasError: boolean;
   private unsubscribe: Subscription[] = [];
@@ -44,7 +45,10 @@ export class ProductCardComponent implements OnInit {
   }
  
   tryAR() {
-    this.router.navigate(['/tryAR']);
+    this.router.navigate(['/tryAR', this.model.id]);
+  }
+  goToDetail(){
+    this.router.navigate(['/product-detail/glass', this.model.id]);
   }
   getPictureUrl(imageUrl: string) {
     const apiUrl = `${environment.apiUrl}Files`

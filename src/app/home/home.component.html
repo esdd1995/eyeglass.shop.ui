@@ -154,9 +154,10 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                    <div *ngFor="let model of productListForCarousel" class="testimonial-item text-center rounded2">
-                        <div class="testimonial-text rounded1 text-center p-4">
-                            <app-product-card [model]="model"></app-product-card>
+                    <div *ngFor="let model of productListForCarousel" class="testimonial-item text-center p-2 rounded2" 
+                    >
+                        <div class="testimonial-text rounded1  text-center p-4" style="box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.339);">
+                            <app-product-card [model]="model" ></app-product-card>
                         </div>
                     </div>
                 </div>

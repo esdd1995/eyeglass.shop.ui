@@ -5,6 +5,7 @@ import { ProductService } from '../product/_service/product.service';
 import { ProductCardModel } from '../product/_model/product.model';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+declare var $: any;
 
 @Component({
   selector: 'app-home',
@@ -31,31 +32,35 @@ export class HomeComponent implements OnInit {
       .subscribe((result: any) => {
         if (result) {
           this.productListForCarousel = result.products as ProductCardModel[]
+          this.initTestimonialCarousel()
         } else {
           this.hasError = true;
         }
       });
     this.unsubscribe.push(subscr);
   }
-  initCarousel(){
-    $(".testimonial-carousel").owlCarousel({
-      autoplay: true,
-      smartSpeed: 1000,
-      center: true,
-      dots: true,
-      loop: true,
-      nav: false,
-      rtl: true,
-
-      responsive: {
+  initTestimonialCarousel() {
+    setTimeout(() => {
+      $(".testimonial-carousel").owlCarousel({
+        autoplay: true,
+        smartSpeed: 1000,
+        center: true,
+        dots: true,
+        loop: true,
+        nav: false,
+        rtl: true,
+  
+        responsive: {
           0: {
-              items: 1
+            items: 1
           },
           768: {
-              items: 3
+            items: 3
           }
-      }
-  });
+        }
+      });
+    }, 1000);
+   
   }
   tryAR() {
     this.router.navigate(['/tryAR']);

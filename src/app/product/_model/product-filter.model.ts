@@ -1,5 +1,10 @@
 export class ProductFilterModel {
-    title: string
+    title?: string;
+    searchTerm?: string;
+    priceFrom?: number | null;
+    priceTo?: number | null;
+    colorId?: number | null;
+    properties?: string[] | null;
     pageSize: number
     pageNumber: number
     constructor() {

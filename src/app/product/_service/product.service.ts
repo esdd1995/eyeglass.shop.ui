@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
 import { map, finalize, catchError } from 'rxjs/operators';
-import { ProductModel } from "../_model/product.model";
+import { ProductDetailModel, ProductModel } from "../_model/product.model";
 import { ProductHTTPService } from "./_http/product-http.service";
 import { ProductFilterModel } from "../_model/product-filter.model";
+import { FileModel } from "../_model/file.model";
 
 @Injectable({
     providedIn: 'root'
@@ -46,20 +47,20 @@ export class ProductService implements OnDestroy {
         );
     }
 
-    // getByIdProduct(id: number): Observable<ProductFormModel> {
-    //     this.isLoadingSubject.next(true);
-    //     return this.productHttpService.getByIdProduct(id).pipe(
-    //         map((result: any) => {
-    //             this.isLoadingSubject.next(false);
-    //             return result;
-    //         }),
-    //         catchError((err) => {
-    //             console.error('err', err);
-    //             return of(err);
-    //         }),
-    //         finalize(() => this.isLoadingSubject.next(false))
-    //     );
-    // }
+    getDetailById(id: number): Observable<ProductDetailModel> {
+        this.isLoadingSubject.next(true);
+        return this.productHttpService.getDetailById(id).pipe(
+            map((result: any) => {
+                this.isLoadingSubject.next(false);
+                return result;
+            }),
+            catchError((err) => {
+                console.error('err', err);
+                return of(err);
+            }),
+            finalize(() => this.isLoadingSubject.next(false))
+        );
+    }
 
     // addProduct(model: ProductFormModel): Observable<ProductModel> {
     //     this.isLoadingSubject.next(true);
@@ -148,18 +149,18 @@ export class ProductService implements OnDestroy {
     //         finalize(() => this.isLoadingSubject.next(false))
     //     );
     // }
-    // upload(files : FileModel): Observable<any> {
-    //     this.isLoadingSubject.next(true);
-    //     return this.productHttpService.upload(files).pipe(
-    //         map((result: any) => {
-    //             this.isLoadingSubject.next(false);
-    //             return result;
-    //         }),
-    //         catchError((err) => {
-    //             console.error('err', err);
-    //             return of(undefined);
-    //         }),
-    //         finalize(() => this.isLoadingSubject.next(false))
-    //     );
-    // }
+    upload(files : FileModel): Observable<any> {
+        this.isLoadingSubject.next(true);
+        return this.productHttpService.upload(files).pipe(
+            map((result: any) => {
+                this.isLoadingSubject.next(false);
+                return result;
+            }),
+            catchError((err) => {
+                console.error('err', err);
+                return of(undefined);
+            }),
+            finalize(() => this.isLoadingSubject.next(false))
+        );
+    }
 }
