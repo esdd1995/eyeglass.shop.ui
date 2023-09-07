@@ -45,7 +45,14 @@
         delay: 10,
         time: 2000
     });
+    $(document).ready(function () {
+        // Toggle the display of "#droplenz" when the link is clicked
+        $('#filter-link').click(function (e) {
+            e.preventDefault();
+            $('#filter').toggle();
+        });
 
+    });
     $(document).ready(function () {
         var isTouchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints; // Check if it's a touch device
         var timeout;
@@ -102,30 +109,29 @@
 
         // Mouseenter/mouseleave for non-touch devices
         if (!isTouchDevice) {
-            $('#droplenz-link, #dropsun-link, #tamasi-link, #adasi-link, #filter-link').mouseenter(function () {
+            $('#droplenz-link, #dropsun-link, #tamasi-link, #adasi-link').mouseenter(function () {
                 clearTimeout(timeout);
                 var elementId = $(this).attr('id').replace('-link', '');
                 showElement(elementId);
             });
 
-            $('#droplenz, #dropsun, #tamasi, #adasi, #filter').mouseenter(function () {
+            $('#droplenz, #dropsun, #tamasi, #adasi').mouseenter(function () {
                 clearTimeout(timeout);
             });
 
-            $('#droplenz-link, #dropsun-link, #tamasi-link, #adasi-link, #filter-link').mouseleave(function () {
+            $('#droplenz-link, #dropsun-link, #tamasi-link, #adasi-link').mouseleave(function () {
                 var elementId = $(this).attr('id').replace('-link', '');
                 timeout = setTimeout(function () {
                     hideElement(elementId);
                 }, 500); // Adjust the delay as needed
             });
 
-            $('#droplenz, #dropsun, #tamasi, #adasi, #filter').mouseleave(function () {
+            $('#droplenz, #dropsun, #tamasi, #adasi').mouseleave(function () {
                 timeout = setTimeout(function () {
                     hideElement('droplenz');
                     hideElement('dropsun');
                     hideElement('tamasi');
                     hideElement('adasi');
-                    hideElement('filter');
                 }, 500); // Adjust the delay as needed
             });
         }
