@@ -4,10 +4,10 @@
 
 export const environment = {
   production: true,
-  appVersion: 'v8.1.8',
+  appVersion: 'v1.0.0',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: false,
-  apiUrl: '185.164.73.238:5200/',
+  apiUrl: 'https://api.eyepack.shop/',
 };
 
 /*

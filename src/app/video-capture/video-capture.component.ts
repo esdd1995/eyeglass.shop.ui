@@ -15,7 +15,7 @@ import { get } from 'jquery';
 export class VideoCaptureComponent implements OnInit {
   @ViewChild('videoElement') videoElement: ElementRef;
   videoStream: MediaStream | undefined;
-  photoInterval: number = 700; // Capture a photo every 700 milliseconds (adjust as needed)
+  photoInterval: number = 600; // Capture a photo every 700 milliseconds (adjust as needed)
   capturedPhotos: Blob[] = [];
   isCapturing = false;
 
@@ -28,7 +28,7 @@ export class VideoCaptureComponent implements OnInit {
   uniqueName: string
   private unsubscribe: Subscription[] = [];
   isRendering: boolean = false
-  captureTimeInSec: number = 4;
+  captureTimeInSec: number = 5;
   videoTracks: MediaStreamTrack[] | null;
   constructor(private productService: ProductService, 
     private route: ActivatedRoute,
