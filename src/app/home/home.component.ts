@@ -62,9 +62,7 @@ export class HomeComponent implements OnInit {
     }, 1000);
    
   }
-  tryAR() {
-    this.router.navigate(['/tryAR']);
-  }
+  
   getPictureUrl(imageUrl: string) {
     const apiUrl = `${environment.apiUrl}Files`
     if (!imageUrl) {

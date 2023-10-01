@@ -45,7 +45,7 @@ export class ProductCardComponent implements OnInit {
   }
  
   tryAR() {
-    this.router.navigate(['/tryAR', this.model.id]);
+    this.router.navigate(['/tryAR-beta', this.model.id]);
   }
   goToDetail(){
     this.router.navigate(['/product-detail/glass', this.model.id]);
