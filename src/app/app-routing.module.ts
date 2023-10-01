@@ -4,6 +4,7 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
 import { HomeComponent } from './home/home.component';
 import { VideoCaptureComponent } from './video-capture/video-capture.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
+import { WebcamSnapshotComponent } from './webcam-snapshot/webcam-snapshot.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'product-list/:params', component: ProductListComponent },
   { path: 'product-detail/glass/:productId', component: ProductDetailComponent },
   { path: 'tryAR/:productId', component: VideoCaptureComponent },
+  { path: 'tryAR-beta/:productId', component: WebcamSnapshotComponent },
 ];
 
 @NgModule({

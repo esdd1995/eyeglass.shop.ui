@@ -10,18 +10,27 @@
             <div class="thumbnail text-center m-2 p-2">
               <img *ngFor="let item of model.galleries;" (click)="setMainImageUrl(item.url)" [alt]="item.description"
                 [src]="getPictureUrl(item.url)" class="my-2 border-1 p-1 w-170">
-              <img *ngIf="haveMaskeModel" (click)="myDialog.show()" alt="ar"
+              <img *ngIf="haveMaskeModel" (click)="openDialog()" alt="ar"
                 src="../../../assets/img/face-recog-image.png" class="my-2 border-1 p-1 w-170">
             </div>
-            <dialog #myDialog style="max-width: 40rem; min-height: 50%;" class="p-2 m-2">
-              <div #scrollableDiv (wheel)="onScroll($event)" (touchmove)="onGesture($event)"
-                class="d-flex justify-content-center">
-                <img [src]="getPictureUrl(mainMaskedUrl)" class="my-2 border-1 p-1"
-                  style="max-width: 90%; border-radius: 1rem;">
+            <dialog id="favDialog" #myDialog style="width: fit-content;" class="p-2 m-2">
+              <div class="d-block ">
+                <div #scrollableDiv (wheel)="onScroll($event)" (touchmove)="onGesture($event)"
+                  class="d-flex justify-content-center">
+                  <img id="canvas" [src]="getPictureUrl(mainMaskedUrl)" class="my-2 border-1 p-1" 
+                    style="max-width: 90%; border-radius: 10px;">
+                </div>
+                <ul class="list-unstyled">
+                  <li *ngFor="let src of maskedImageModel.urls; let idx = index" >
+                    <img [src]="getPictureUrl(src)" height="30" (click)="setPhoto(idx)"/>
+                  </li>
+                </ul>
+                <div class="d-flex justify-content-center">
+                  <button class="btn btn-primary" (click)="myDialog.close()">
+                    بستن
+                  </button>
+                </div>
               </div>
-              <button class="fill-cont btn btn-primary" (click)="myDialog.close()">
-                بستن
-              </button>
             </dialog>
           </div>
         </div>

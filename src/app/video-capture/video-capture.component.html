@@ -4,7 +4,7 @@
       <p *ngIf="!isCapturing">پس از فشردن دکمه ضبط، صورت خود را به آرامی به نیم رخ راست، سپس به چپ بچرخانید.</p>
     </div>
     <div class="d-flex justify-content-center">
-      <video *ngIf="!isRendering" #videoElement [srcObject]="videoStream" autoplay style="border-radius: 1rem; max-width: -webkit-fill-available;"></video>
+      <video playsinline *ngIf="!isRendering" #videoElement [srcObject]="videoStream" autoplay style="border-radius: 1rem; max-width: -webkit-fill-available;"></video>
       <div class="spinner-container" *ngIf="isRendering">
         <div class="spinner"></div>
       </div>

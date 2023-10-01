@@ -1,0 +1,29 @@
+<div class="d-block justify-content-center">
+	<div class="spinner-container" *ngIf="isUploading">
+		<div class="spinner"></div>
+	</div>
+	<div class="d-flex justify-content-center m-2">
+		<p>پس از فشردن دکمه ضبط، صورت خود را به آرامی به نیم رخ راست، سپس به چپ بچرخانید.</p>
+	</div>
+	<div class="video-container" *ngIf="!error">
+		<video [class.show]="!isCaptured" [class.hide]="isCaptured" #video id="video" [width]="WIDTH" [height]="HEIGHT"
+			autoplay></video>
+		<canvas [class.show]="isCaptured" [class.hide]="!isCaptured" #canvas id="canvas" [width]="WIDTH"
+			[height]="HEIGHT"></canvas>
+
+	</div>
+
+	<div class="snap-container">
+		<button style="min-width: 5rem" class="btn btn-primary" [disabled]="isCaptured"
+			(click)="capture()">{{ButtonText}}</button>
+		<div *ngIf="error" class="text-danger mt-4">
+			{{ error }}
+		</div>
+	</div>
+
+	<ul class="list-unstyled">
+		<li *ngFor="let src of captures; let idx = index" (click)="setPhoto(idx)">
+			<img [src]="src" height="50" />
+		</li>
+	</ul>
+</div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, first } from 'rxjs';
 import { ProductService } from '../_service/product.service';
@@ -12,6 +12,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class ProductDetailComponent implements OnInit {
   @ViewChild('scrollableDiv') scrollableDiv: ElementRef;
+  @ViewChild('myDialog') myDialog: HTMLDialogElement;
   private touchStartX: number | null = null;
   private touchStartY: number | null = null;
   private isGesturing = false;
@@ -33,6 +34,8 @@ export class ProductDetailComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+
 
   ) {
     this.route.params.subscribe(params => { this.productId = +params['productId'] });
@@ -44,6 +47,11 @@ export class ProductDetailComponent implements OnInit {
     this.getDetailById()
     this.getMaskedImageModelFromLocal()
   }
+  openDialog() {
+    const dialog: any = document.getElementById("favDialog");
+    if (dialog)
+      dialog.show();
+  }
   getDetailById() {
     this.hasError = false;
     const subscr = this.productService
@@ -54,7 +62,6 @@ export class ProductDetailComponent implements OnInit {
           this.model = result
           this.setMainImageUrl(this.model.galleries[0].url)
           this.selectedPrice = this.model.prices[0]
-          console.log(this.model)
         } else {
           this.hasError = true;
         }
@@ -79,7 +86,7 @@ export class ProductDetailComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(content);
   }
   tryAR() {
-    this.router.navigate(['/tryAR', this.productId]);
+    this.router.navigate(['/tryAR-beta', this.productId]);
   }
   getMaskedImageModelFromLocal() {
     const maskedImageModelJSON = localStorage.getItem(`maskedImageModel-${this.productId}`)
@@ -89,6 +96,7 @@ export class ProductDetailComponent implements OnInit {
         this.haveMaskeModel = true
         this.mainMaskedUrl = this.maskedImageModel.urls[0]
       }
+      this.openDialog()
     }
     else
       this.maskedImageModel = new TryArMaskedModel()
@@ -96,85 +104,109 @@ export class ProductDetailComponent implements OnInit {
   getNextUrl() {
     var nextIndex = getNextIndex(this.maskedImageModel.urls, this.mainMaskedUrl);
     this.mainMaskedUrl = this.maskedImageModel.urls[nextIndex]
+    this.setPhoto(nextIndex)
+    this.cdr.detectChanges();
+
   }
   getPastUrl() {
     const pastIndex = getPastIndex(this.maskedImageModel.urls, this.mainMaskedUrl);
     this.mainMaskedUrl = this.maskedImageModel.urls[pastIndex];
+    this.setPhoto(pastIndex)
+    this.cdr.detectChanges();
+
   }
+  setPhoto(idx: number) {
+    let image: any = document.getElementById("canvas");
+    if (image)
+      image.src = this.getPictureUrl(this.maskedImageModel.urls[idx]);
+  }
+  // Touch/Gesture event handler for horizontal gestures
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.touches[0].clientX;
+    this.touchStartY = event.touches[0].clientY;
+  }
+
+  @HostListener('touchmove', ['$event'])
+  onGesture(event: TouchEvent) {
+    if (this.touchStartX === null || this.touchStartY === null) {
+      return;
+    }
+
+    const scrollableDiv = this.scrollableDiv.nativeElement;
+    const deltaX = event.touches[0].clientX - this.touchStartX;
+    const deltaY = event.touches[0].clientY - this.touchStartY;
+
+    // Adjust the threshold values as needed
+    if (this.isDescendantOrSelf(scrollableDiv, event.target as Node)) {
+      if (Math.abs(deltaX) > 10 && Math.abs(deltaY) < 10) {
+        // Horizontal gesture with significant movement (more than 10 pixels)
+        event.preventDefault();
+        if (deltaX > 0) {
+          // Gesture to the right
+          this.startGesturing(() => this.getNextUrl());
+        } else {
+          // Gesture to the left
+          this.startGesturing(() => this.getPastUrl());
+        }
+      }
+    }
+  }
+
+  @HostListener('touchend', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    this.stopGesturing();
+    this.touchStartX = null;
+    this.touchStartY = null;
+  }
+
+  // Start the gesture and call the specified function repeatedly
+  private startGesturing(callback: () => void) {
+    if (!this.isGesturing) {
+      this.isGesturing = true;
+      this.gestureInterval = setInterval(() => callback(), 100); // Adjust the interval as needed
+    }
+  }
+
+  // Stop the gesture
+  private stopGesturing() {
+    if (this.isGesturing) {
+      this.isGesturing = false;
+      clearInterval(this.gestureInterval);
+    }
+  }
+
+  // Mouse scroll event handler
+  private scrollTimeout: number | null = null;
+  private scrollDistanceThreshold = 100; // Adjust this threshold as needed
   
-   // Touch/Gesture event handler for horizontal gestures
-   @HostListener('touchstart', ['$event'])
-   onTouchStart(event: TouchEvent) {
-     this.touchStartX = event.touches[0].clientX;
-     this.touchStartY = event.touches[0].clientY;
-   }
- 
-   @HostListener('touchmove', ['$event'])
-   onGesture(event: TouchEvent) {
-     if (this.touchStartX === null || this.touchStartY === null) {
-       return;
-     }
- 
-     const scrollableDiv = this.scrollableDiv.nativeElement;
-     const deltaX = event.touches[0].clientX - this.touchStartX;
-     const deltaY = event.touches[0].clientY - this.touchStartY;
- 
-     // Adjust the threshold values as needed
-     if (this.isDescendantOrSelf(scrollableDiv, event.target as Node)) {
-       if (Math.abs(deltaX) > 10 && Math.abs(deltaY) < 10) {
-         // Horizontal gesture with significant movement (more than 10 pixels)
-         event.preventDefault();
-         if (deltaX > 0) {
-           // Gesture to the right
-           this.startGesturing(() => this.getNextUrl());
-         } else {
-           // Gesture to the left
-           this.startGesturing(() => this.getPastUrl());
-         }
-       }
-     }
-   }
- 
-   @HostListener('touchend', ['$event'])
-   onTouchEnd(event: TouchEvent) {
-     this.stopGesturing();
-     this.touchStartX = null;
-     this.touchStartY = null;
-   }
- 
-   // Start the gesture and call the specified function repeatedly
-   private startGesturing(callback: () => void) {
-     if (!this.isGesturing) {
-       this.isGesturing = true;
-       this.gestureInterval = setInterval(() => callback(), 100); // Adjust the interval as needed
-     }
-   }
- 
-   // Stop the gesture
-   private stopGesturing() {
-     if (this.isGesturing) {
-       this.isGesturing = false;
-       clearInterval(this.gestureInterval);
-     }
-   }
- 
-   // Mouse scroll event handler
-   @HostListener('wheel', ['$event'])
-   onScroll(event: WheelEvent) {
-     const scrollableDiv = this.scrollableDiv.nativeElement;
-     if (this.isDescendantOrSelf(scrollableDiv, event.target as Node)) {
-       event.preventDefault();
- 
-       // You can access event.deltaY to determine the scroll direction
-       if (event.deltaY > 0) {
-         // Scroll down
-         this.getNextUrl();
-       } else {
-         // Scroll up
-         this.getPastUrl();
-       }
-     }
-   }
+  @HostListener('wheel', ['$event'])
+  onScroll(event: WheelEvent) {
+    const scrollableDiv = this.scrollableDiv.nativeElement;
+  
+    if (this.isDescendantOrSelf(scrollableDiv, event.target as Node)) {
+      event.preventDefault();
+  
+      if (Math.abs(event.deltaY) >= this.scrollDistanceThreshold) {
+        // Clear any existing timeout
+        if (this.scrollTimeout !== null) {
+          clearTimeout(this.scrollTimeout);
+        }
+  
+        // Set a new timeout to delay the scroll handling
+        this.scrollTimeout = window.setTimeout(() => {
+          if (event.deltaY > 0) {
+            // Scroll down
+            this.getNextUrl();
+          } else {
+            // Scroll up
+            this.getPastUrl();
+          }
+          this.scrollTimeout = null; // Reset the timeout
+        }, 50); // 300 milliseconds delay
+      }
+    }
+  }
 
   isDescendantOrSelf(parent: Node, child: Node): boolean {
     return parent === child || parent.contains(child);
@@ -187,7 +219,7 @@ function getNextIndex<T>(arr: T[], currentElement: T): number {
     return -1; // You can choose to handle this case differently if needed
   }
 
-  const nextIndex = (currentIndex + 1) % arr.length;
+  const nextIndex = (currentIndex + 1) === arr.length ? 0 : currentIndex + 1;
   return nextIndex;
 }
 function getPastIndex<T>(arr: T[], currentElement: T): number {

@@ -12,6 +12,7 @@ import { VideoCaptureComponent } from './video-capture/video-capture.component';
 import { HttpHeadersInterceptor } from './http-headers.interceptor';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { PersianNumberPipe } from './persian-number.pipe';
+import { WebcamSnapshotModule } from './webcam-snapshot/webcam-snapshot.module';
 @NgModule({
   declarations: [
     
@@ -30,6 +31,7 @@ import { PersianNumberPipe } from './persian-number.pipe';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    WebcamSnapshotModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
