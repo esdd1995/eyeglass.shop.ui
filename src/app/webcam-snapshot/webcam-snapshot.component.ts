@@ -197,7 +197,7 @@ export class WebcamSnapshotComponent implements OnInit {
       const blob = this.dataURItoBlob(dataURL);
 
       // Create a File from the Blob
-      return new File([blob], `photo_${index + 1}.jpg`, { type: 'image/jpeg' });
+      return new File([blob], `${generateFileName(index.toString())}.jpg`, { type: 'image/jpeg' });
     });
 
     const fileModel: FileModel = {
@@ -295,3 +295,17 @@ function uuidv4(): string {
     return v.toString(16);
   });
 }
+function generateFileName(text: string) {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  // Combine datetime components into a file name
+  const fileName = `${month}${day}_${hours}${minutes}${seconds}_${text}`;
+
+  return fileName;
+}
+
+
