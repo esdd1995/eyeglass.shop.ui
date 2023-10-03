@@ -51,10 +51,9 @@ export class WebcamSnapshotComponent implements OnInit {
   }
   initDeviceWIDTHHEIGHT() {
     const screenWidth = window.innerWidth;
-    this.WIDTH = screenWidth * 0.9;
-    if (this.WIDTH > 640)
-      this.WIDTH = 640;
-    this.HEIGHT = this.WIDTH / this.RATIO;
+    const screenHeight = window.innerHeight
+    this.WIDTH = screenWidth;
+    this.HEIGHT = screenHeight;
   }
   setUniqueName() {
     const un_local = localStorage.getItem('uniqueName');
