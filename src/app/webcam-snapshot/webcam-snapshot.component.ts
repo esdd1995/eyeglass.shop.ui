@@ -1,52 +1,53 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { ProductService } from "../product/_service/product.service";
-import { FileModel } from "../product/_model/file.model";
-import { first } from "rxjs";
-import { TryArRawModel, TryArMaskedModel } from "../product/_model/product.model";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FileCategory } from "../common/enum/file-category.enum";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { WebcamComponent, WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { ProductService } from '../product/_service/product.service';
+import { FileModel } from '../product/_model/file.model';
+import { TryArRawModel, TryArMaskedModel } from '../product/_model/product.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FileCategory } from '../common/enum/file-category.enum';
+import { first } from 'rxjs';
 
 @Component({
-  selector: "app-webcam-snapshot",
-  templateUrl: "./webcam-snapshot.component.html",
-  styleUrls: ["./webcam-snapshot.component.scss"]
+  selector: 'app-webcam-snapshot',
+  templateUrl: './webcam-snapshot.component.html',
+  styleUrls: ['./webcam-snapshot.component.scss'],
 })
-export class WebcamSnapshotComponent implements AfterViewInit, OnInit {
-  rawImageModel: TryArRawModel
-  maskedImageModel: TryArMaskedModel
-  constructor(private productService: ProductService,
-    private route: ActivatedRoute,
-    private router: Router) {
-    this.route.params.subscribe(params => { this.productId = +params['productId'] });
-  }
+export class WebcamSnapshotComponent implements OnInit {
+  rawImageModel: TryArRawModel;
+  maskedImageModel: TryArMaskedModel;
 
   WIDTH = 640;
   HEIGHT = 480;
   RATIO = 640 / 480
   captureCount: number = 2; // the number of captures
-  captureIntervals: number = 700 //in mili sec
-  productId: number
-  ButtonText = 'شروع'
-  isUploading = false
-  @ViewChild("video")
-  public video: ElementRef;
+  captureIntervals: number = 700; // in milliseconds
+  productId: number;
+  ButtonText = 'شروع';
+  isUploading = false;
+  isCaptured: boolean = false;
+  captures:string[]= [];
+  error: any;
 
+  @ViewChild('webcam')
+  public webcam: WebcamComponent;
   @ViewChild("canvas")
   public canvas: ElementRef;
 
-  captures: string[] = [];
-  error: any;
-  isCaptured: boolean;
-
-  async ngAfterViewInit() {
-    await this.setupDevices();
-    this.dispalayTextOnCanvas("Hello");
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.params.subscribe((params) => {
+      this.productId = +params['productId'];
+    });
     this.initDeviceWIDTHHEIGHT();
   }
+
   ngOnInit(): void {
-    this.rawImageModel = new TryArRawModel()
-    this.rawImageModel.uniqueName = this.setUniqueName()
-    this.maskedImageModel = new TryArMaskedModel()
+    this.rawImageModel = new TryArRawModel();
+    this.rawImageModel.uniqueName = this.setUniqueName();
+    this.maskedImageModel = new TryArMaskedModel();
   }
   initDeviceWIDTHHEIGHT() {
     const screenWidth = window.innerWidth;
@@ -55,35 +56,17 @@ export class WebcamSnapshotComponent implements AfterViewInit, OnInit {
       this.WIDTH = 640;
     this.HEIGHT = this.WIDTH / this.RATIO;
   }
-  async setupDevices() {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true
-        });
-        if (stream) {
-          this.video.nativeElement.srcObject = stream;
-          this.video.nativeElement.play();
-          this.error = null;
-        } else {
-          this.error = "You have no output video device";
-        }
-      } catch (e) {
-        this.error = e;
-      }
-    }
-  }
   setUniqueName() {
-    var un_local = localStorage.getItem("uniqueName")
-    if (un_local && un_local.length > 5)
-      return un_local
+    const un_local = localStorage.getItem('uniqueName');
+    if (un_local && un_local.length > 5) return un_local;
     else {
-      var un_new = generateUniqueFileName()
-      localStorage.setItem("uniqueName", un_new)
-      return un_new
+      const un_new = generateUniqueFileName();
+      localStorage.setItem('uniqueName', un_new);
+      return un_new;
     }
   }
-  capture() {
+
+  async capture() {
     this.captureWithInterval(this.captureCount, this.captureIntervals, () => {
       // All repetitions are complete, so now you can upload the captured photos
       this.uploadCapturedPhotos();
@@ -92,31 +75,39 @@ export class WebcamSnapshotComponent implements AfterViewInit, OnInit {
 
   captureWithInterval(repetitions: number, interval: number, onComplete: () => void) {
     let currentRepetition = 0;
-
+  
     const captureStep = () => {
       if (currentRepetition < repetitions) {
         // Flash the canvas white
         this.flashCanvasWhite();
-
+  
         // Set 'isCaptured' to true after the specified interval
         setTimeout(() => {
           this.isCaptured = true;
-          this.dispalayTextOnCanvas((currentRepetition + 1) + " از " + repetitions);
-
-          // Capture the current frame after the specified interval
+          this.dispalayTextOnCanvas(`${currentRepetition + 1} از ${repetitions}`);
+  
+          // Capture the current frame to the canvas after the specified interval
           setTimeout(() => {
-            this.drawImageToCanvas(this.video.nativeElement);
             this.isCaptured = true;
-            this.captures.push(this.canvas.nativeElement.toDataURL("image/png"));
-
+            const video = this.webcam.nativeVideoElement;
+            const canvas = this.canvas.nativeElement;
+            const ctx = canvas.getContext("2d");
+  
+            canvas.width = this.WIDTH;
+            canvas.height = this.HEIGHT;
+  
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+            this.captures.push(canvas.toDataURL('image/jpeg'));
+  
             // Set 'isCaptured' to false after the specified interval
             setTimeout(() => {
               this.isCaptured = false;
               currentRepetition++;
-
+  
               // Repeat the capture step
               captureStep();
-
+  
               // Check if all repetitions are complete
               if (currentRepetition === repetitions) {
                 // Call the onComplete callback function
@@ -127,13 +118,21 @@ export class WebcamSnapshotComponent implements AfterViewInit, OnInit {
         }, interval);
       }
     };
-
+  
     // Start the capture process
     captureStep();
   }
-
-
-
+  setPhoto(idx: number) {
+    this.isCaptured = true;
+    var image = new Image();
+    image.src = this.captures[idx];
+    this.drawImageToCanvas(image);
+  }
+   drawImageToCanvas(image: any) {
+    this.canvas.nativeElement
+      .getContext("2d")
+      .drawImage(image, 0, 0, this.WIDTH, this.HEIGHT);
+  }
   flashCanvasWhite() {
     const canvas = this.canvas.nativeElement;
     const ctx = canvas.getContext("2d");
@@ -182,42 +181,11 @@ export class WebcamSnapshotComponent implements AfterViewInit, OnInit {
     // Clear the canvas by drawing a transparent rectangle over it
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
-  removeCurrent() {
-    this.isCaptured = false;
+
+  clearCaptures() {
+    this.captures = [];
   }
 
-  setPhoto(idx: number) {
-    this.isCaptured = true;
-    var image = new Image();
-    image.src = this.captures[idx];
-    this.drawImageToCanvas(image);
-  }
-
-  drawImageToCanvas(image: any) {
-    this.canvas.nativeElement
-      .getContext("2d")
-      .drawImage(image, 0, 0, this.WIDTH, this.HEIGHT);
-  }
-  upload(files: FileModel) {
-    this.isUploading = true
-    this.productService.upload(files).pipe(first())
-      .subscribe((result: any) => {
-        if (result && result.ok == false) {
-          // this.toastService.error(result.error.message);
-        } else {
-          this.rawImageModel.rawUrls = result.rawUrls
-          this.setRawImageModelLocal()
-          this.maskedImageModel.urls = result.urls
-          this.maskedImageModel.productId = this.productId
-          this.setMaskedImageModelLocal()
-          this.isUploading = false
-          this.goToDetail()
-        }
-      }, err => {
-        // this.toastService.error(err.error.message);
-      });
-  }
-  // Import the necessary classes
   uploadCapturedPhotos() {
     if (this.captures.length === 0) {
       // No photos to upload
@@ -238,14 +206,46 @@ export class WebcamSnapshotComponent implements AfterViewInit, OnInit {
       uniqueName: this.rawImageModel.uniqueName,
       category: FileCategory.ArPhoto,
       productId: this.productId,
-      rawUrls: []
+      rawUrls: [],
     };
 
     this.upload(fileModel);
   }
+
+  upload(files: FileModel) {
+    this.isUploading = true;
+    
+    this.productService
+      .upload(files)
+      .pipe(first())
+      .subscribe({
+        next: (result: any) => {
+          if (result && result.ok == false) {
+            this.isUploading = false;
+            this.error = result;
+            // Handle error
+          } else {
+            this.rawImageModel.rawUrls = result.rawUrls;
+            this.setRawImageModelLocal();
+            this.maskedImageModel.urls = result.urls;
+            this.maskedImageModel.productId = this.productId;
+            this.setMaskedImageModelLocal();
+            this.isUploading = false;
+            this.goToDetail();
+          }
+        },
+        error: (err) => {
+          this.isUploading = false;
+          // Handle error
+        },
+      });
+  }
+  
+
   goToDetail() {
     this.router.navigate(['/product-detail/glass', this.productId]);
   }
+
   // Helper function to convert Data URL to Blob
   dataURItoBlob(dataURI: string): Blob {
     const byteString = atob(dataURI.split(',')[1]);
@@ -260,12 +260,18 @@ export class WebcamSnapshotComponent implements AfterViewInit, OnInit {
   }
 
   setRawImageModelLocal() {
-    localStorage.setItem("rawImageModel", JSON.stringify(this.rawImageModel))
+    localStorage.setItem('rawImageModel', JSON.stringify(this.rawImageModel));
   }
+
   setMaskedImageModelLocal() {
-    localStorage.setItem(`maskedImageModel-${this.productId}`, JSON.stringify(this.maskedImageModel))
+    localStorage.removeItem(`maskedImageModel-${this.productId}`)
+    localStorage.setItem(
+      `maskedImageModel-${this.productId}`,
+      JSON.stringify(this.maskedImageModel)
+    );
   }
 }
+
 function generateUniqueFileName(): string {
   // Gather device information
   const userAgent: string = navigator.userAgent;
@@ -281,6 +287,7 @@ function generateUniqueFileName(): string {
 
   return fileNameFriendlyTerm;
 }
+
 function uuidv4(): string {
   // Generate a random UUID (not cryptographically secure)
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
