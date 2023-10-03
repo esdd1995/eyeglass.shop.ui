@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { WebcamComponent, WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { ProductService } from '../product/_service/product.service';
 import { FileModel } from '../product/_model/file.model';
@@ -12,7 +12,7 @@ import { first } from 'rxjs';
   templateUrl: './webcam-snapshot.component.html',
   styleUrls: ['./webcam-snapshot.component.scss'],
 })
-export class WebcamSnapshotComponent implements OnInit {
+export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
   rawImageModel: TryArRawModel;
   maskedImageModel: TryArMaskedModel;
 
@@ -25,7 +25,7 @@ export class WebcamSnapshotComponent implements OnInit {
   ButtonText = 'شروع';
   isUploading = false;
   isCaptured: boolean = false;
-  captures:string[]= [];
+  captures: string[] = [];
   error: any;
 
   @ViewChild('webcam')
@@ -41,7 +41,17 @@ export class WebcamSnapshotComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.productId = +params['productId'];
     });
-    this.initDeviceWIDTHHEIGHT();
+  }
+  ngAfterViewInit(): void {
+    // this.initDeviceWidthHeight();
+
+  }
+  initDeviceWidthHeight() {
+    const video = this.webcam.nativeVideoElement;
+    if (video) {
+      this.canvas.nativeElement.width = video.videoWidth;
+      this.canvas.nativeElement.height = video.videoHeight;
+    }
   }
 
   ngOnInit(): void {
@@ -49,12 +59,7 @@ export class WebcamSnapshotComponent implements OnInit {
     this.rawImageModel.uniqueName = this.setUniqueName();
     this.maskedImageModel = new TryArMaskedModel();
   }
-  initDeviceWIDTHHEIGHT() {
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight
-    this.WIDTH = screenWidth;
-    this.HEIGHT = screenHeight;
-  }
+
   setUniqueName() {
     const un_local = localStorage.getItem('uniqueName');
     if (un_local && un_local.length > 5) return un_local;
@@ -66,6 +71,7 @@ export class WebcamSnapshotComponent implements OnInit {
   }
 
   async capture() {
+    this.initDeviceWidthHeight();
     this.captureWithInterval(this.captureCount, this.captureIntervals, () => {
       // All repetitions are complete, so now you can upload the captured photos
       this.uploadCapturedPhotos();
@@ -74,39 +80,37 @@ export class WebcamSnapshotComponent implements OnInit {
 
   captureWithInterval(repetitions: number, interval: number, onComplete: () => void) {
     let currentRepetition = 0;
-  
+
     const captureStep = () => {
       if (currentRepetition < repetitions) {
         // Flash the canvas white
         this.flashCanvasWhite();
-  
+
         // Set 'isCaptured' to true after the specified interval
         setTimeout(() => {
           this.isCaptured = true;
           this.dispalayTextOnCanvas(`${currentRepetition + 1} از ${repetitions}`);
-  
+
           // Capture the current frame to the canvas after the specified interval
           setTimeout(() => {
             this.isCaptured = true;
             const video = this.webcam.nativeVideoElement;
             const canvas = this.canvas.nativeElement;
             const ctx = canvas.getContext("2d");
-  
-            canvas.width = this.WIDTH;
-            canvas.height = this.HEIGHT;
-  
+
+
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  
+
             this.captures.push(canvas.toDataURL('image/jpeg'));
-  
+
             // Set 'isCaptured' to false after the specified interval
             setTimeout(() => {
               this.isCaptured = false;
               currentRepetition++;
-  
+
               // Repeat the capture step
               captureStep();
-  
+
               // Check if all repetitions are complete
               if (currentRepetition === repetitions) {
                 // Call the onComplete callback function
@@ -117,7 +121,7 @@ export class WebcamSnapshotComponent implements OnInit {
         }, interval);
       }
     };
-  
+
     // Start the capture process
     captureStep();
   }
@@ -127,10 +131,11 @@ export class WebcamSnapshotComponent implements OnInit {
     image.src = this.captures[idx];
     this.drawImageToCanvas(image);
   }
-   drawImageToCanvas(image: any) {
+  drawImageToCanvas(image: any) {
+    const canvas = this.canvas.nativeElement;
     this.canvas.nativeElement
       .getContext("2d")
-      .drawImage(image, 0, 0, this.WIDTH, this.HEIGHT);
+      .drawImage(image, 0, 0, canvas.width, canvas.height);
   }
   flashCanvasWhite() {
     const canvas = this.canvas.nativeElement;
@@ -213,7 +218,7 @@ export class WebcamSnapshotComponent implements OnInit {
 
   upload(files: FileModel) {
     this.isUploading = true;
-    
+
     this.productService
       .upload(files)
       .pipe(first())
@@ -239,7 +244,7 @@ export class WebcamSnapshotComponent implements OnInit {
         },
       });
   }
-  
+
 
   goToDetail() {
     this.router.navigate(['/product-detail/glass', this.productId]);
