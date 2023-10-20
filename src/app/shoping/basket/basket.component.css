@@ -1,0 +1,44 @@
+.item-count {
+    display: flex;
+    align-items: center;
+}
+
+.btn-minus, .btn-plus {
+    min-width: 30px;
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #a8a8a8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-size: 14px;
+}
+
+.btn-minus:hover, .btn-plus:hover {
+    background-color: #999999;
+}
+
+.count-input {
+    text-align: center;
+    width: 50px;
+    min-height: 37px;
+    border-radius: 5px;
+    
+    font-size: 18px;
+}
+.close-button {
+    display: inline-block;
+    margin-left: auto;
+    padding: 5px 10px;
+    color: #666666;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.close-button:hover {
+    color: #b30000;
+}

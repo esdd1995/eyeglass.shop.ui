@@ -1,0 +1,82 @@
+<div class="container-fluid bg-grey py-5">
+    <div class="container">
+
+        <div class="row d-flex justify-content-center">
+            <form [formGroup]="form">
+                <div *ngIf="loginState == 0" class="col-md-4">
+
+                    <div class="row g-3">
+                        <p class="text-dark text-center fs-7">شماره موبایل خود را برای دریافت کد وارد کنید</p>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" formControlName="phoneNumber"
+                                    class="form-control rounded1 bg-white border-0" placeholder="شماره موبایل" />
+                                <label class="pt-1 mt-1" for="phoneNumber">شماره موبایل</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button (click)="requestVerificationCode()" class="btn btn-primary btn-blue  w-100 py-3"
+                                type="submit">
+                                <a style="font-size: x-large;"> ارسال کد</a>
+                            </button>
+                        </div>
+                        <!-- <div class="col-md-12 text-center">
+                <a href="" class="text-blue text-center">رمزت رو فراموش کردی؟</a>
+              </div> -->
+                    </div>
+
+                    <!-- <div class="col-12 py-3">
+              <p class="linetext">
+                <span>یا</span>
+              </p>
+            </div>
+
+            <div class="col-12">
+              <button class="btn btn-light bordered w-100 py-3" type="submit">
+                عضویت
+              </button>
+            </div> -->
+
+                </div>
+
+                <div *ngIf="loginState == 1" class="col-md-4">
+
+                    <div class="row g-3">
+                        <p class="text-dark text-center fs-7">کد ارسال شده را وارد کنید</p>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" formControlName="validationCode"
+                                    class="form-control rounded1 bg-white border-0" placeholder="کد چهار رقمی" />
+                                <label class="pt-1 mt-1" for="validationCode">کد چهار رقمی </label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <button (click)="login()" class="btn btn-primary btn-blue  w-100 py-3" type="submit">
+                                <a style="font-size: x-large;">ارسال کد</a>
+                            </button>
+                        </div>
+                        <!-- <div class="col-md-12 text-center">
+                <a href="" class="text-blue text-center">رمزت رو فراموش کردی؟</a>
+              </div> -->
+                    </div>
+
+                    <!-- <div class="col-12 py-3">
+              <p class="linetext">
+                <span>یا</span>
+              </p>
+            </div>
+
+            <div class="col-12">
+              <button class="btn btn-light bordered w-100 py-3" type="submit">
+                عضویت
+              </button>
+            </div> -->
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

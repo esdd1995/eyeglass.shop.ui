@@ -5,6 +5,7 @@ import { ProductService } from '../_service/product.service';
 import { ProductDetailModel, ProductPriceModel, TryArMaskedModel } from '../_model/product.model';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { BasketLocalModel } from 'src/app/shoping/_model/basket.model';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -88,6 +89,26 @@ export class ProductDetailComponent implements OnInit {
   tryAR() {
     this.router.navigate(['/tryAR-beta', this.productId]);
   }
+  addToBasket() {
+    let basketLocalModel: BasketLocalModel[] = []
+    const basketItemsJSON = localStorage.getItem("local-basket");
+    if (basketItemsJSON)
+      basketLocalModel = JSON.parse(basketItemsJSON)
+    let product = basketLocalModel.filter(x => x.productId == this.productId && x.productPriceId == this.selectedPrice.id)[0];
+    if (product)
+      basketLocalModel.filter(x => x.productId == this.productId && x.productPriceId == this.selectedPrice.id)[0].count++;
+    else {
+      let bl = new BasketLocalModel()
+      bl.count = 1
+      bl.productId = this.productId
+      bl.productPriceId = this.selectedPrice.id
+      //TODO:
+      // bl.type = x.type
+      basketLocalModel.push(bl)
+    }
+    localStorage.setItem("local-basket", JSON.stringify(basketLocalModel))
+  }
+
   getMaskedImageModelFromLocal() {
     const maskedImageModelJSON = localStorage.getItem(`maskedImageModel-${this.productId}`)
     if (maskedImageModelJSON) {
@@ -179,20 +200,20 @@ export class ProductDetailComponent implements OnInit {
   // Mouse scroll event handler
   private scrollTimeout: number | null = null;
   private scrollDistanceThreshold = 100; // Adjust this threshold as needed
-  
+
   @HostListener('wheel', ['$event'])
   onScroll(event: WheelEvent) {
     const scrollableDiv = this.scrollableDiv.nativeElement;
-  
+
     if (this.isDescendantOrSelf(scrollableDiv, event.target as Node)) {
       event.preventDefault();
-  
+
       if (Math.abs(event.deltaY) >= this.scrollDistanceThreshold) {
         // Clear any existing timeout
         if (this.scrollTimeout !== null) {
           clearTimeout(this.scrollTimeout);
         }
-  
+
         // Set a new timeout to delay the scroll handling
         this.scrollTimeout = window.setTimeout(() => {
           if (event.deltaY > 0) {

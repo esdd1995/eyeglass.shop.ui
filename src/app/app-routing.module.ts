@@ -5,6 +5,11 @@ import { HomeComponent } from './home/home.component';
 import { VideoCaptureComponent } from './video-capture/video-capture.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { WebcamSnapshotComponent } from './webcam-snapshot/webcam-snapshot.component';
+import { BasketComponent } from './shoping/basket/basket.component';
+import { LoginComponent } from './auth/components/login/login.component';
+import { AddOrderComponent } from './shoping/add-order/add-order.component';
+import { AuthGuard } from './auth/services/auth.guard';
+import { UserProfileComponent } from './auth/components/user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -13,6 +18,10 @@ const routes: Routes = [
   { path: 'product-detail/glass/:productId', component: ProductDetailComponent },
   { path: 'tryAR/:productId', component: VideoCaptureComponent },
   { path: 'tryAR-beta/:productId', component: WebcamSnapshotComponent },
+  { path: 'basket', component: BasketComponent },
+  { path: 'regOrder', component: AddOrderComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'me', component: UserProfileComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

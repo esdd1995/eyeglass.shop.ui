@@ -1,146 +1,154 @@
-  <!-- Topbar Start -->
-  <div class="container-fluid bg-white p-0 wow fadeIn" data-wow-delay="0.1s">
-    <div class="row gx-0 d-none d-lg-flex pt-3 px-5">
-      <a href="index.html" class="navbar-brand">
-        <img class="icon-resize2" src="../../assets/img/Logo1.png" alt="Icon" />
+<!-- Topbar Start -->
+<div class="container-fluid bg-white p-0 wow fadeIn" data-wow-delay="0.1s">
+  <div class="row gx-0 d-none d-lg-flex pt-3 px-5">
+    <a href="index.html" class="navbar-brand">
+      <img class="icon-resize2" src="../../assets/img/Logo1.png" alt="Icon" />
 
-      </a>
+    </a>
+  </div>
+</div>
+<!-- Topbar End -->
+
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-5 wow fadeIn"
+  data-wow-delay="0.1s">
+
+  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
+    <div class="navbar-nav ms-auto">
+      <a href="" class="nav-item nav-link  indicator-target active" id="droplenz-link">عینک‌ها</a>
+      <a href="" class="nav-item nav-link  indicator-target" id="dropsun-link">عینک آفتابی</a>
+      <a href="" class="nav-item nav-link  indicator-target" id="tamasi-link">لنزهای تماسی</a>
+      <a href="" class="nav-item nav-link  indicator-target" id="adasi-link">عدسی‌ها</a>
+      <a href="contact.html" class="nav-item nav-link  indicator-target">لوازم جانبی</a>
+      <a href="contact.html" class="nav-item nav-link  indicator-target">دریافت نسخه</a>
+      <a href="contact.html" class="nav-item nav-link  indicator-target">امتحان در خانه</a>
+    </div>
+    <!-- <div id="nav-indicator"></div> -->
+    <img src="../../assets/img/icon/i2.png" class="icon-resize px-2 border-right" alt="">
+    <div class="basket-icon-container">
+      <img (click)="goToBasket()" src="../../assets/img/icon/i1.png" class="icon-resize px-2 border-right basket-icon"
+        alt="">
+      <span *ngIf="itemCountInBasket > 0" class="badge">{{ itemCountInBasket }}</span>
+    </div>
+    <ng-container *ngIf="user$ | async as _user">
+        <a class="px-2 text-dark">{{ _user.firstName }} {{ _user.lastName }}</a>
+    </ng-container>
+
+    <a href="/me" class="px-2 text-dark">حساب کاربری</a>
+
+  </div>
+</nav>
+
+<div class="container-fluid bg-grey pt-4 p-0 mb-5" id="droplenz" style="display: none;">
+  <div class="row g-0 d-flex justify-content-center">
+    <div class="col-lg-9 my-5 p-0">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-2 mx-2">
+          <div class="text-center"> <img src="../../assets/img/a1.png" class="img-fluid" alt=""></div>
+          <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
+          <p class="text-center text-dark">عینک طبی مردانه</p>
+        </div>
+        <div class="col-md-2 mx-2">
+          <div class="text-center"> <img src="../../assets/img/a2.png" class="img-fluid" alt=""></div>
+          <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
+          <p class="text-center text-dark">عینک طبی زنانه</p>
+        </div>
+        <div class="col-md-2 mx-2">
+          <div class="text-center"> <img src="../../assets/img/a3.png" class="img-fluid" alt=""></div>
+          <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
+          <p class="text-center text-dark">عینک طبی کودکان</p>
+        </div>
+        <div class="col-md-2 mx-2">
+          <div class="text-center"> <img src="../../assets/img/a4.png" class="img-fluid" alt=""></div>
+          <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
+          <p class="text-center text-dark">عینک طبی شنا</p>
+        </div>
+        <div class="col-md-2 mx-2">
+          <div class="text-center"> <img src="../../assets/img/a5.png" class="img-fluid" alt=""></div>
+          <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
+          <p class="text-center text-dark">عینک طبی کامپیوتر</p>
+        </div>
+
+
+      </div>
     </div>
   </div>
-  <!-- Topbar End -->
+</div>
+<div class="container-fluid bg-grey pt-4 p-0 mb-5" id="dropsun" style="display: none;">
+  <div class="row g-0 d-flex justify-content-center">
+    <div class="col-lg-9 my-5 p-0 wow fadeIn" data-wow-delay="0.1s">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-2 mx-2">
+          <div class="text-center"> <img src="../../assets/img/a6.png" class="img-fluid" alt=""></div>
+          <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
+          <p class="text-center text-dark">عینک آفتابی مردانه</p>
+        </div>
+        <div class="col-md-2 mx-2">
+          <div class="text-center"> <img src="../../assets/img/a7.png" class="img-fluid" alt=""></div>
+          <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
+          <p class="text-center text-dark">عینک آفتابی زنانه</p>
+        </div>
+        <div class="col-md-2 mx-2">
+          <div class="text-center"> <img src="../../assets/img/a8.png" class="img-fluid" alt=""></div>
+          <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
+          <p class="text-center text-dark">عینک آفتابی کودکان</p>
+        </div>
 
-  <!-- Navbar Start -->
-  <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-5 wow fadeIn"
-    data-wow-delay="0.1s">
 
-    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
-      <div class="navbar-nav ms-auto">
-        <a href="" class="nav-item nav-link  indicator-target active" id="droplenz-link">عینک‌ها</a>
-        <a href="" class="nav-item nav-link  indicator-target" id="dropsun-link">عینک آفتابی</a>
-        <a href="" class="nav-item nav-link  indicator-target" id="tamasi-link">لنزهای تماسی</a>
-        <a href="" class="nav-item nav-link  indicator-target" id="adasi-link">عدسی‌ها</a>
-        <a href="contact.html" class="nav-item nav-link  indicator-target">لوازم جانبی</a>
-        <a href="contact.html" class="nav-item nav-link  indicator-target">دریافت نسخه</a>
-        <a href="contact.html" class="nav-item nav-link  indicator-target">امتحان در خانه</a>
       </div>
-      <!-- <div id="nav-indicator"></div> -->
-      <img src="../../assets/img/icon/i2.png" class="icon-resize px-2 border-right" alt="">
-      <img src="../../assets/img/icon/i1.png" class="icon-resize px-2 border-right" alt="">
-      <a href="" class="px-2 text-dark">حساب کاربری</a>
-
     </div>
-  </nav>
+  </div>
+</div>
+<div class="container-fluid bg-grey pt-4 p-0 mb-5" id="tamasi" style="display: none;">
+  <div class="row g-0 d-flex justify-content-center">
+    <div class="col-lg-8 my-5 p-0 wow fadeIn" data-wow-delay="0.1s">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-2 pt-4">
+          <p class="text-end text-grey">لنز طبی</p>
+          <p class="text-end text-grey">لنز طبی رنگی</p>
+          <p class="text-end text-grey">لنز رنگی</p>
+        </div>
+        <div class="col-md-4">
+          <img src="../../assets/img/len2.png" class="img-resize4" alt="">
+        </div>
+        <div class="col-md-6">
+          <img src="../../assets/img/len1.png" class="img-resize4" alt="">
+        </div>
 
-  <div class="container-fluid bg-grey pt-4 p-0 mb-5" id="droplenz" style="display: none;">
-    <div class="row g-0 d-flex justify-content-center">
-      <div class="col-lg-9 my-5 p-0">
-        <div class="row d-flex justify-content-center">
-          <div class="col-md-2 mx-2">
-            <div class="text-center"> <img src="../../assets/img/a1.png" class="img-fluid" alt=""></div>
-            <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
-            <p class="text-center text-dark">عینک طبی مردانه</p>
-          </div>
-          <div class="col-md-2 mx-2">
-            <div class="text-center"> <img src="../../assets/img/a2.png" class="img-fluid" alt=""></div>
-            <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
-            <p class="text-center text-dark">عینک طبی زنانه</p>
-          </div>
-          <div class="col-md-2 mx-2">
-            <div class="text-center"> <img src="../../assets/img/a3.png" class="img-fluid" alt=""></div>
-            <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
-            <p class="text-center text-dark">عینک طبی کودکان</p>
-          </div>
-          <div class="col-md-2 mx-2">
-            <div class="text-center"> <img src="../../assets/img/a4.png" class="img-fluid" alt=""></div>
-            <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
-            <p class="text-center text-dark">عینک طبی شنا</p>
-          </div>
-          <div class="col-md-2 mx-2">
-            <div class="text-center"> <img src="../../assets/img/a5.png" class="img-fluid" alt=""></div>
-            <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
-            <p class="text-center text-dark">عینک طبی کامپیوتر</p>
-          </div>
-
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid bg-grey pt-4 p-0 mb-5" id="adasi" style="display: none;">
+  <div class="row g-0 d-flex justify-content-center">
+    <div class="col-lg-8 my-5 p-0 wow fadeIn" data-wow-delay="0.1s">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+          <p class="text-end text-grey">عدسی HC</p>
+          <p class="text-end text-grey">عدسی آنتی‌رفلکس</p>
+          <p class="text-end text-grey">عدسی فتوکرومیک</p>
+          <p class="text-end text-grey">عدسی بلوکات</p>
+          <p class="text-end text-grey">عدسی پلی‌کربنات</p>
 
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid bg-grey pt-4 p-0 mb-5" id="dropsun" style="display: none;">
-    <div class="row g-0 d-flex justify-content-center">
-      <div class="col-lg-9 my-5 p-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="row d-flex justify-content-center">
-          <div class="col-md-2 mx-2">
-            <div class="text-center"> <img src="../../assets/img/a6.png" class="img-fluid" alt=""></div>
-            <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
-            <p class="text-center text-dark">عینک آفتابی مردانه</p>
-          </div>
-          <div class="col-md-2 mx-2">
-            <div class="text-center"> <img src="../../assets/img/a7.png" class="img-fluid" alt=""></div>
-            <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
-            <p class="text-center text-dark">عینک آفتابی زنانه</p>
-          </div>
-          <div class="col-md-2 mx-2">
-            <div class="text-center"> <img src="../../assets/img/a8.png" class="img-fluid" alt=""></div>
-            <div class="text-start"> <img src="../../assets/img/underline.png" class="img-fluid ps-5" alt=""></div>
-            <p class="text-center text-dark">عینک آفتابی کودکان</p>
-          </div>
-
+        <div class="col-md-4">
+          <p class="text-end text-grey">عدسی فشرده ۱/۶۲</p>
+          <p class="text-end text-grey">عدسی فشرده ۱/۶۷</p>
+          <p class="text-end text-grey">عدسی فوق فشرده ۱/۷۴</p>
+          <p class="text-end text-grey">عدسی نشکن</p>
 
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid bg-grey pt-4 p-0 mb-5" id="tamasi" style="display: none;">
-    <div class="row g-0 d-flex justify-content-center">
-      <div class="col-lg-8 my-5 p-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="row d-flex justify-content-center">
-          <div class="col-md-2 pt-4">
-            <p class="text-end text-grey">لنز طبی</p>
-            <p class="text-end text-grey">لنز طبی رنگی</p>
-            <p class="text-end text-grey">لنز رنگی</p>
-          </div>
-          <div class="col-md-4">
-            <img src="../../assets/img/len2.png" class="img-resize4" alt="">
-          </div>
-          <div class="col-md-6">
-            <img src="../../assets/img/len1.png" class="img-resize4" alt="">
-          </div>
-
+        <div class="col-md-4">
+          <img src="../../assets/img/len3.png" class="img-resize4" alt="">
         </div>
+
+
       </div>
     </div>
   </div>
-  <div class="container-fluid bg-grey pt-4 p-0 mb-5" id="adasi" style="display: none;">
-    <div class="row g-0 d-flex justify-content-center">
-      <div class="col-lg-8 my-5 p-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="row d-flex justify-content-center">
-          <div class="col-md-4">
-            <p class="text-end text-grey">عدسی HC</p>
-            <p class="text-end text-grey">عدسی آنتی‌رفلکس</p>
-            <p class="text-end text-grey">عدسی فتوکرومیک</p>
-            <p class="text-end text-grey">عدسی بلوکات</p>
-            <p class="text-end text-grey">عدسی پلی‌کربنات</p>
+</div>
 
-          </div>
-          <div class="col-md-4">
-            <p class="text-end text-grey">عدسی فشرده ۱/۶۲</p>
-            <p class="text-end text-grey">عدسی فشرده ۱/۶۷</p>
-            <p class="text-end text-grey">عدسی فوق فشرده ۱/۷۴</p>
-            <p class="text-end text-grey">عدسی نشکن</p>
-
-          </div>
-          <div class="col-md-4">
-            <img src="../../assets/img/len3.png" class="img-resize4" alt="">
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Navbar End -->
+<!-- Navbar End -->

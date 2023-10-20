@@ -34,6 +34,7 @@ export class ProductDetailModel {
     properties: ProductPropertyValues[] = []
 }
 export class ProductPriceModel {
+    id: number
     productId: number;
     mainPrice: number;
     specialPrice: number;
