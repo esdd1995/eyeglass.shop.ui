@@ -1,160 +1,153 @@
 <div class="container-fluid bg-grey py-5">
-    <div class="container">
+  <div class="container">
 
-      <div class="row g-5 d-flex justify-content-center">
-        <div class="col-md-9">
+    <div class="row g-5 d-flex justify-content-center">
+      <div class="col-md-9">
+        <form [formGroup]="form">
           <div class="row">
             <div class="col-md-5 text-center mt-l1">
               <div class="bg-white rounded1 shadow">
-                <img src="./img/pic.png" class="img-resize2 mt-l2" alt="">
-                <p class="text-center text-dark fs-9 mt-3">راب برایدن</p>
-                <p class="text-center text-grey border-bottom1 mb-4 pb-5 fs-9 mx-3">۰۹۱۲۳۴۵۸۹۷</p>
-                <a href="">
-                  <div class="row d-flex justify-content-between">
-                    <div class="col-4 text-end">
-                      <p class="text-center text-dark fs-9">تغییر رمز</p>
-                    </div>
-                    <div class="col-3 text-start">
-                      <p class="text-center text-dark fs-9">**</p>
-                    </div>
-                  </div>
-                </a>
-                <a href="">
-                  <div class="row d-flex pb-4 justify-content-between">
-
-                    <div class="col-5 text-end">
-                      <p class="text-center text-dark fs-9">خروج از حساب</p>
-                    </div>
-                    <div class="col-3 text-start">
-                      <p class="text-center text-dark fs-9"><i class="fa fa-arrow-left"></i></p>
-                    </div>
-                  </div>
-                </a>
+                <div class="image-container" (click)="openFileInput.click()" style="cursor: pointer;">
+                  <img *ngIf="!user.imageUrl" src="../../../../assets/img/pic.png" class="img-resize2 mt-l2" alt="">
+                  <img *ngIf="user.imageUrl" [src]="getPictureUrl()" class="img-resize2 mt-l2" alt="">
+                  <button *ngIf="user.imageUrl" (click)="deletePicture()" class="delete-button">
+                    X
+                  </button>
+                </div>
+                <input type="file" #openFileInput formControlName="imageUrl" (change)="handleImageUpload($event)" style="display: none;">
+                <p class="text-center text-dark fs-9 mt-3">{{user.fullName}}</p>
+                <p class="text-center text-grey border-bottom1 mb-4 pb-5 fs-9 mx-3">{{user.phoneNumber}}</p>
               </div>
+              
+              
             </div>
             <div class="col-md-7">
               <div class="row">
-                <form>
-                  <div class="row g-3">
-                    <p class="text-dark text-end mb-0 fs-7"><span><img src="img/icon/i12.png" class="icon-resize px-2 "
-                          alt="">
-                      </span>اطلاعات شخصی </p>
-                    <div class="col-md-12">
-                      <div class="form-floating">
-                        <input type="text" class="form-control rounded3 bg-white border-0" id="name"
-                          placeholder="Your Name" />
-                        <label for="name">نام و نام‌ خانوادگی</label>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-floating">
-                        <input type="email" class="form-control rounded3 bg-white border-0" id="email"
-                          placeholder="Your Email" />
-                        <label for="email">تلفن همراه</label>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-floating">
-                        <input type="email" class="form-control rounded3 bg-white border-0" id="email"
-                          placeholder="Your Email" />
-                        <label for="email">نشانی دقیق</label>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-floating">
-                        <input type="email" class="form-control rounded3 bg-white border-0" id="email"
-                          placeholder="Your Email" />
-                        <label for="email">کدپستی</label>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-floating">
-                        <input type="email" class="form-control rounded3 bg-white border-0" id="email"
-                          placeholder="Your Email" />
-                        <label for="email">شهر</label>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-floating">
-                        <input type="email" class="form-control rounded3 bg-white border-0" id="email"
-                          placeholder="Your Email" />
-                        <label for="email">استان</label>
-                      </div>
-                    </div>
-
-
-                    <div class="col-md-12 text-start">
-                      <a href="" class="text-blue text-center">ویرایش اطلاعات
-                        <i class="fa fa-chevron-left fs-9"></i>
-                      </a>
+                <div class="row g-3">
+                  <p class="text-dark text-end mb-0 fs-7"><span><img src="../../../../assets/img/icon/i12.png"
+                        class="icon-resize px-2 " alt="">
+                    </span>اطلاعات شخصی </p>
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input formControlName="firstName" type="text" class="form-control rounded3 bg-white border-0"
+                        id="firstName" placeholder="Your Name" />
+                      <label for="firstName">نام</label>
                     </div>
                   </div>
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input formControlName="lastName" type="text" class="form-control rounded3 bg-white border-0"
+                        id="lastName" placeholder="Your Name" />
+                      <label for="lastName">نام‌ خانوادگی</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input formControlName="phoneNumber" type="text" class="form-control rounded3 bg-white border-0"
+                        id="phoneNumber" placeholder="Your phoneNumber" />
+                      <label for="phoneNumber">تلفن همراه</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input type="email" class="form-control rounded3 bg-white border-0" id="email"
+                        placeholder="Your Email" />
+                      <label for="email">نشانی دقیق</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input type="email" class="form-control rounded3 bg-white border-0" id="email"
+                        placeholder="Your Email" />
+                      <label for="email">کدپستی</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="email" class="form-control rounded3 bg-white border-0" id="email"
+                        placeholder="Your Email" />
+                      <label for="email">استان</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="email" class="form-control rounded3 bg-white border-0" id="email"
+                        placeholder="Your Email" />
+                      <label for="email">شهر</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <button (click)="updateUser()" class="btn-dark text-white">ذخیره اطلاعات</button>
+                  </div>
+                </div>
 
-                </form>
               </div>
             </div>
+
           </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- header End -->
+<div class="container-fluid bg-white py-5">
+  <div class="container">
+    <div class="row g-5 d-flex justify-content-center">
+      <div class="col-md-9">
+        <p class="text-dark text-end mb-3 fs-7"><span><img src="img/icon/i12.png" class="icon-resize px-2 " alt="">
+          </span>سفارشات</p>
+        <div class="table-responsive rounded1 ">
+          <table class="table rounded1">
+            <thead class="bg-blue rounded1">
+              <tr>
+                <th class="text-center"></th>
+                <th class="text-center">شماره سفارش</th>
+                <th class="text-center">تاریخ ثبت سفارش</th>
+                <th class="text-center">مبلغ کل</th>
+                <th class="text-center">وضعیت پرداخت</th>
+                <th class="text-center">جزییات</th>
+              </tr>
+            </thead>
+            <tbody class="bg-grey rounded1">
+              <tr class="bg-grey">
+                <td class="text-center">۱</td>
+                <td class="text-center">۲۵۷۴</td>
+                <td class="text-center">۱۸ اسفند ۱۴۰۱</td>
+                <td class="text-center">۸۲۱٬۰۰۰ تومان</td>
+                <td class="text-blue text-center">پرداخت شده</td>
+                <td class="text-blue text-center">
+                  <a href="">
+                    <i class="fa fa-chevron-left"></i></a>
+                </td>
+              </tr>
+              <tr class="bg-grey">
+                <td class="text-center">۲</td>
+                <td class="text-center">۲۵۷۴</td>
+                <td class="text-center">۱۸ اسفند ۱۴۰۱</td>
+                <td class="text-center">۸۲۱٬۰۰۰ تومان</td>
+                <td class="text-blue text-center">پرداخت شده</td>
+                <td class="text-blue text-center">
+                  <a href="">
+                    <i class="fa fa-chevron-left"></i></a>
+                </td>
+              </tr>
+              <tr class="bg-grey rounded1 border-none">
+                <td class="text-center border-b-r">۳</td>
+                <td class="text-center">۲۵۷۴</td>
+                <td class="text-center">۱۸ اسفند ۱۴۰۱</td>
+                <td class="text-center">۸۲۱٬۰۰۰ تومان</td>
+                <td class="text-blue text-center">پرداخت شده</td>
+                <td class="text-blue text-center border-b-l">
+                  <a href="">
+                    <i class="fa fa-chevron-left"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-  <!-- header End -->
-  <div class="container-fluid bg-white py-5">
-    <div class="container">
-      <div class="row g-5 d-flex justify-content-center">
-        <div class="col-md-9">
-          <p class="text-dark text-end mb-3 fs-7"><span><img src="img/icon/i12.png" class="icon-resize px-2 " alt="">
-            </span>سفارشات</p>
-          <div class="table-responsive rounded1 ">
-            <table class="table rounded1">
-              <thead class="bg-blue rounded1">
-                <tr>
-                  <th class="text-center"></th>
-                  <th class="text-center">شماره سفارش</th>
-                  <th class="text-center">تاریخ ثبت سفارش</th>
-                  <th class="text-center">مبلغ کل</th>
-                  <th class="text-center">وضعیت پرداخت</th>
-                  <th class="text-center">جزییات</th>
-                </tr>
-              </thead>
-              <tbody class="bg-grey rounded1">
-                <tr class="bg-grey">
-                  <td class="text-center">۱</td>
-                  <td class="text-center">۲۵۷۴</td>
-                  <td class="text-center">۱۸ اسفند ۱۴۰۱</td>
-                  <td class="text-center">۸۲۱٬۰۰۰ تومان</td>
-                  <td class="text-blue text-center">پرداخت شده</td>
-                  <td class="text-blue text-center">
-                    <a href="">
-                      <i class="fa fa-chevron-left"></i></a>
-                  </td>
-                </tr>
-                <tr class="bg-grey">
-                  <td class="text-center">۲</td>
-                  <td class="text-center">۲۵۷۴</td>
-                  <td class="text-center">۱۸ اسفند ۱۴۰۱</td>
-                  <td class="text-center">۸۲۱٬۰۰۰ تومان</td>
-                  <td class="text-blue text-center">پرداخت شده</td>
-                  <td class="text-blue text-center">
-                    <a href="">
-                      <i class="fa fa-chevron-left"></i></a>
-                  </td>
-                </tr>
-                <tr class="bg-grey rounded1 border-none">
-                  <td class="text-center border-b-r">۳</td>
-                  <td class="text-center">۲۵۷۴</td>
-                  <td class="text-center">۱۸ اسفند ۱۴۰۱</td>
-                  <td class="text-center">۸۲۱٬۰۰۰ تومان</td>
-                  <td class="text-blue text-center">پرداخت شده</td>
-                  <td class="text-blue text-center border-b-l">
-                    <a href="">
-                      <i class="fa fa-chevron-left"></i></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>

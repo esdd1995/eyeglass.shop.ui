@@ -1494,6 +1494,7 @@ element.style {}
 
 .form-floating>label {
     position: absolute;
+    direction: rtl;
     top: 0;
     right: 0 !important;
 }

@@ -6,6 +6,8 @@ import { AuthHTTPService } from './http/auth-http.service';
 import { UserModel } from '../models/user.model';
 import { AuthModel } from '../models/auth.model';
 import { Router } from '@angular/router';
+import { FileModel } from 'src/app/product/_model/file.model';
+import { FileCategory } from 'src/app/common/enum/file-category.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -31,11 +33,11 @@ export class AuthService implements OnDestroy {
         private router: Router
     ) {
         this.isLoadingSubject = new BehaviorSubject<boolean>(false);
-    this.currentUserSubject = new BehaviorSubject<UserModel>(undefined as any);
-    this.currentUser$ = this.currentUserSubject.asObservable();
-    this.isLoading$ = this.isLoadingSubject.asObservable();
-    const subscr = this.getUserByToken().subscribe();
-    this.unsubscribe.push(subscr);
+        this.currentUserSubject = new BehaviorSubject<UserModel>(undefined as any);
+        this.currentUser$ = this.currentUserSubject.asObservable();
+        this.isLoading$ = this.isLoadingSubject.asObservable();
+        const subscr = this.getUserByToken().subscribe();
+        this.unsubscribe.push(subscr);
     }
 
     ngOnDestroy() {
@@ -127,4 +129,33 @@ export class AuthService implements OnDestroy {
             queryParams: {},
         });
     }
+    updateUser(user: UserModel): Observable<any> {
+        this.isLoadingSubject.next(true);
+        return this.authHttpService.updateUser(user).pipe(
+            map(() => {
+                this.isLoadingSubject.next(false);
+            }),
+            catchError((err) => {
+                console.error('err', err);
+                return of(undefined);
+            }),
+            finalize(() => this.isLoadingSubject.next(false))
+        );
+    }
+    uploadProfilePicture(files: FileModel): Observable<any> {
+        this.isLoadingSubject.next(true);
+        files.category = FileCategory.ProfilePicture
+        return this.authHttpService.upload(files).pipe(
+            map((result: any) => {
+                this.isLoadingSubject.next(false);
+                return result;
+            }),
+            catchError((err) => {
+                console.error('err', err);
+                return of(undefined);
+            }),
+            finalize(() => this.isLoadingSubject.next(false))
+        );
+    }
+
 }
