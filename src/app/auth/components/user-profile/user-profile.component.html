@@ -14,15 +14,22 @@
                     X
                   </button>
                 </div>
-                <input type="file" #openFileInput formControlName="imageUrl" (change)="handleImageUpload($event)" style="display: none;">
+                <input type="file" #openFileInput formControlName="imageUrl" (change)="handleImageUpload($event)"
+                  style="display: none;">
                 <p class="text-center text-dark fs-9 mt-3">{{user.fullName}}</p>
                 <p class="text-center text-grey border-bottom1 mb-4 pb-5 fs-9 mx-3">{{user.phoneNumber}}</p>
+                <p class="text-center text-dark pb-4" (click)="logOut()" style="cursor: pointer;">خروج</p>
               </div>
-              
-              
+
+
+
             </div>
             <div class="col-md-7">
               <div class="row">
+                <div class="justify-content-center">
+                  <p style="font-size: medium;" *ngIf="user.isNew">خوش آمدید</p>
+                  <p style="font-size: x-large;" *ngIf="user.isNew">لطفا اطلاعات شخصی خود را تکمیل کنید</p>
+                </div>
                 <div class="row g-3">
                   <p class="text-dark text-end mb-0 fs-7"><span><img src="../../../../assets/img/icon/i12.png"
                         class="icon-resize px-2 " alt="">

@@ -1,1 +1,160 @@
-<p>add-order works!</p>
+<div class="container-fluid bg-grey py-5">
+    <div class="container">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <form [formGroup]="form">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input formControlName="fullName" type="text" class="form-control rounded3 bg-white border-0" id="name"
+                                    placeholder="Your Name" />
+                                <label for="name">نام و نام‌ خانوادگی</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input formControlName="phoneNumber" type="email" class="form-control rounded3 bg-white border-0" id="phoneNumber"
+                                    placeholder="Your phoneNumber" />
+                                <label for="phoneNumber">تلفن همراه</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="email" class="form-control rounded3 bg-white border-0" id="email"
+                                    placeholder="Your Email" />
+                                <label for="email">نشانی دقیق</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="email" class="form-control rounded3 bg-white border-0" id="email"
+                                    placeholder="Your Email" />
+                                <label for="email">کدپستی</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control rounded3 bg-white border-0" id="email"
+                                    placeholder="Your Email" />
+                                <label for="email">شهر</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control rounded3 bg-white border-0" id="email"
+                                    placeholder="Your Email" />
+                                <label for="email">استان</label>
+                            </div>
+                        </div>
+
+                        <img src="./img/icon/i11.png" class="icon-resize2 m-t-l" alt="">
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- header End -->
+<div class="container-fluid bg-grey py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-7">
+                        <p>انتخاب روش ارسال</p>
+                        <div class="bg-white py-3 px-2 rounded1 row">
+                            <div class="col-6 text-end">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input mx-2" id="radio1" name="optradio"
+                                        (click)="updateDeliveryAmount(600000)" style="float: right;" checked>ارسال
+                                    از طریق اداره پست
+                                    <label class="form-check-label" for="radio1"></label>
+                                </div>
+                            </div>
+                            <div class="col-6 text-start">
+                                <p>{{600000 | persianNumberWithSeperator}} ريال</p>
+                            </div>
+                        </div>
+                        <div class="bg-white py-3 px-2 my-2 rounded1 row">
+                            <div class="col-6 text-end">
+
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input mx-2" id="radio2" name="optradio"
+                                        value="option2" (click)="updateDeliveryAmount(500000)" style="float: right;"
+                                        checked>ارسال از طریق پیک در ساری
+                                    <label class="form-check-label" for="radio2"></label>
+                                </div>
+                            </div>
+                            <div class="col-6 text-start">
+                                <p>{{500000 | persianNumberWithSeperator}} ريال</p>
+                            </div>
+                        </div>
+                        <div class="bg-white py-3 px-2 my-2 rounded1 row">
+                            <div class="col-6 text-end">
+
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input mx-2" id="radio3" name="optradio"
+                                        value="option3" style="float: right;" checked>کد تخفیف دارید؟
+                                    <label class="form-check-label" for="radio3"></label>
+                                </div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <input type="text" style="float: left;" class="border-0" placeholder="اینجا وارد کنید">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-blue mt-2 w-100 py-3" type="submit">
+                                مرحله بعد: پرداخت اینترنتی
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mx-2 pt-5">
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-6">
+                                <p>قیمت کل</p>
+                            </div>
+                            <div class="col-6">
+                                <p>{{totalAmount | persianNumberWithSeperator}} ريال</p>
+
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-6">
+                                <p>تخفیف</p>
+                            </div>
+                            <div class="col-6">
+                                <p>{{discount | persianNumberWithSeperator}} ريال</p>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-6">
+                                <p>هزینه ارسال</p>
+                            </div>
+                            <div class="col-6">
+                                <p>{{deliveryAmount | persianNumberWithSeperator}} ريال</p>
+                            </div>
+                        </div>
+                        <div class=" border-bottom1 ms-5"></div>
+
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-6">
+                                <p>مجموع</p>
+                            </div>
+                            <div class="col-6">
+                                <p>{{payableAmount | persianNumberWithSeperator}} ريال</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

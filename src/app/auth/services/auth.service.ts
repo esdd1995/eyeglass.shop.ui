@@ -125,9 +125,12 @@ export class AuthService implements OnDestroy {
     }
     logout(): void {
         localStorage.removeItem(this.authTokenKey);
+        // Refresh the page
+        window.location.reload();
         this.router.navigate(['/home'], {
             queryParams: {},
         });
+
     }
     updateUser(user: UserModel): Observable<any> {
         this.isLoadingSubject.next(true);

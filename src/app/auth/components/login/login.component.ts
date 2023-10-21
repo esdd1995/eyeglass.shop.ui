@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
                     if (user.isNew){
                         this.router.navigate(['/me'])
                     }
-                    this.router.navigate([this.returnUrl]);
+                    // this.router.navigate([this.returnUrl]);
                 } else {
                     this.hasError = true;
                 }

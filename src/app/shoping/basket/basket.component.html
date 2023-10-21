@@ -1,109 +1,113 @@
 <div class="container-fluid bg-grey py-5">
-    <div class="container">
+  <div class="container">
 
-      <div class="row g-5 d-flex justify-content-center">
-        <div class="col-md-9">
-          <div class="row g-5 d-flex justify-content-center">
-            <div class="col-md-8">
-              <p class="text-dark text-end mb-3 fs-7"><span><img src="/src/assets/img/icon/i12.png" class="icon-resize px-2 "
-                    alt="">
-                </span>سبد خرید</p>
-              
-              <div *ngFor="let item of model" class="row py-3 my-2 bg-white rounded1">
-                <div class="col-12 text-start px-3">
-                  <h5 class="close-button" (click)="deleteItemFromBasket(item)">x</h5>
-                </div>
-                <div class="col-md-6 d-flex align-items-center justify-content-center">
-                  <img [src]="getPictureUrl(item.imageUrl)" class="img-fluid" alt="">
-                </div>
-                <div class="col-md-6 px-5">
-                  <p class="mb-0">{{item.titleFa}}</p>
-                  <p class="mb-3 fs-9">{{item.categoryName}} {{item.brandName}} {{item.productColorName}}</p>
+    <div *ngIf="model.length > 0" class="row g-5 d-flex justify-content-center">
+      <div class="col-md-9">
+        <div class="row g-5 d-flex justify-content-center">
+          <div class="col-md-8">
+            <p class="text-dark text-end mb-3 fs-7"><span><img src="/src/assets/img/icon/i12.png"
+                  class="icon-resize px-2 " alt="">
+              </span>سبد خرید</p>
 
-                  <!-- <p class="mb-0">کد محصول</p>
+            <div *ngFor="let item of model" class="row py-3 my-2 bg-white rounded1">
+              <div class="col-12 text-start px-3">
+                <h5 class="close-button" (click)="deleteItemFromBasket(item)">x</h5>
+              </div>
+              <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <img [src]="getPictureUrl(item.imageUrl)" class="img-fluid" alt="">
+              </div>
+              <div class="col-md-6 px-5">
+                <p class="mb-0">{{item.titleFa}}</p>
+                <p class="mb-3 fs-9">{{item.categoryName}} {{item.brandName}} {{item.productColorName}}</p>
+
+                <!-- <p class="mb-0">کد محصول</p>
                   <p class="mb-3 fs-9">ش۱۴۰۱۱۱۰۲۰۲۳۵۷۴</p> -->
-                  <div *ngIf="item.specialPrice && item.specialPrice > 0">
-                    <p class="mb-0">قیمت واحد</p>
-                    <p class="mb-0 fs-9" [ngStyle]="{'text-decoration': 'line-through'}">{{item.mainPrice | persianNumberWithSeperator}} ريال</p>
-                    <p class="mb-3 fs-9" style="color: red;">{{item.specialPrice | persianNumberWithSeperator}} ريال</p>
+                <div *ngIf="item.specialPrice && item.specialPrice > 0">
+                  <p class="mb-0">قیمت واحد</p>
+                  <p class="mb-0 fs-9" [ngStyle]="{'text-decoration': 'line-through'}">{{item.mainPrice |
+                    persianNumberWithSeperator}} ريال</p>
+                  <p class="mb-3 fs-9" style="color: red;">{{item.specialPrice | persianNumberWithSeperator}} ريال</p>
+                </div>
+                <div *ngIf="!item.specialPrice">
+                  <p class="mb-0">قیمت واحد</p>
+                  <p class="mb-3 fs-9">{{item.mainPrice | persianNumberWithSeperator}} ريال</p>
+                </div>
+
+                <p class="mb-0">تعداد</p>
+                <div class="col-3 text-center bg-white border-0">
+                  <div class="item-count">
+                    <button class="btn-minus fs-9" (click)="decrementCount(item)">-</button>
+                    <input type="text" class="count-input" [value]="item.count" />
+                    <button class="btn-plus fs-9" (click)="incrementCount(item)">+</button>
                   </div>
-                  <div *ngIf="!item.specialPrice">
-                    <p class="mb-0">قیمت واحد</p>
-                    <p class="mb-3 fs-9">{{item.mainPrice | persianNumberWithSeperator}} ريال</p>
-                  </div>
-                  
-                  <p class="mb-0">تعداد</p>
-                  <div class="col-3 text-center bg-white border-0">
-                    <div class="item-count">
-                      <button class="btn-minus fs-9" (click)="decrementCount(item)">-</button>
-                      <input type="text" class="count-input" [value]="item.count" />
-                      <button class="btn-plus fs-9" (click)="incrementCount(item)">+</button>
-                  </div>
-                  
-                  </div>
+
                 </div>
               </div>
             </div>
-            <div class="col-md-4 pt-5">
-              <p class="text-end">مجموع کل سبد خرید</p>
+          </div>
+          <div class="col-md-4 pt-5">
+            <p class="text-end">مجموع کل سبد خرید</p>
 
-              <div class=" border-bottom1"></div>
+            <div class=" border-bottom1"></div>
 
-              <div class="row d-flex justify-content-between">
-                <div class="col-6">
-                  <p>قیمت کل</p>
-                </div>
-                <div class="col-6">
-                  <p>{{totalAmount | persianNumberWithSeperator}} ريال</p>
-                </div>
+            <div class="row d-flex justify-content-between">
+              <div class="col-6">
+                <p>قیمت کل</p>
               </div>
-              <div class="row d-flex justify-content-between">
-                <div class="col-6">
-                  <p>تخفیف</p>
-                </div>
-                <div class="col-6">
-                  <p>{{discount | persianNumberWithSeperator}} ريال</p>
-                </div>
+              <div class="col-6">
+                <p>{{totalAmount | persianNumberWithSeperator}} ريال</p>
               </div>
+            </div>
+            <div class="row d-flex justify-content-between">
+              <div class="col-6">
+                <p>تخفیف</p>
+              </div>
+              <div class="col-6">
+                <p>{{discount | persianNumberWithSeperator}} ريال</p>
+              </div>
+            </div>
 
 
-              <div class="row d-flex justify-content-between">
-                <div class="col-6">
-                  <p>مجموع</p>
-                </div>
-                <div class="col-6">
-                  <p>{{payableAmount | persianNumberWithSeperator}} ريال</p>
-                </div>
+            <div class="row d-flex justify-content-between">
+              <div class="col-6">
+                <p>مجموع</p>
               </div>
-              <div class="row">
-                <div class="col-12">
-                  <button class="btn btn-primary btn-blue mt-2 w-100 py-3" type="submit">
-                    مرحله بعد: شیوه ارسال </button>
-                </div>
+              <div class="col-6">
+                <p>{{payableAmount | persianNumberWithSeperator}} ريال</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <a href="/regOrder" class="btn btn-primary btn-blue mt-2 w-100 py-3">
+                  مرحله بعد: شیوه ارسال </a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container-fluid bg-white py-5">
-    <div class="container">
-
-      <div class="row g-5 d-flex justify-content-center">
-        <div class="col-md-9">
-          <p class="text-dark text-center">قاب ایده‌آل خود را پیدا کنید!</p>
-          <p class="text-dark text-center"> برای پیدا کردن فریم مناسب صورت خود به چند سوال کوتاه پاسخ دهید</p>
-          <div class="text-center"><img src="./img/people.png" class="icon-resize3" alt="">
-          </div>
-          <div class="text-center">
-            <button class="btn btn-primary btn-blue " type="submit">
-              انجام کوییز </button>
-          </div>
-        </div>
-
-
-      </div>
-
+    <div *ngIf="model.length == 0" class="row g-5 d-flex justify-content-center">
+      <span style="font-size: x-large;">سبد خرید شما خالی است</span>
     </div>
   </div>
+</div>
+<div class="container-fluid bg-white py-5">
+  <div class="container">
+
+    <div class="row g-5 d-flex justify-content-center">
+      <div class="col-md-9">
+        <p class="text-dark text-center">قاب ایده‌آل خود را پیدا کنید!</p>
+        <p class="text-dark text-center"> برای پیدا کردن فریم مناسب صورت خود به چند سوال کوتاه پاسخ دهید</p>
+        <div class="text-center"><img src="./img/people.png" class="icon-resize3" alt="">
+        </div>
+        <div class="text-center">
+          <button class="btn btn-primary btn-blue " type="submit">
+            انجام کوییز </button>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>

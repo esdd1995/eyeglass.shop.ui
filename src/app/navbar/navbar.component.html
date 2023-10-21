@@ -31,13 +31,18 @@
     <div class="basket-icon-container">
       <img (click)="goToBasket()" src="../../assets/img/icon/i1.png" class="icon-resize px-2 border-right basket-icon"
         alt="">
-      <span *ngIf="itemCountInBasket > 0" class="badge">{{ itemCountInBasket }}</span>
+      <span *ngIf="itemCountInBasket > 0" class="badge">{{ itemCountInBasket | persianNumber}}</span>
     </div>
-    <ng-container *ngIf="user$ | async as _user">
-        <a class="px-2 text-dark">{{ _user.firstName }} {{ _user.lastName }}</a>
+    <ng-container *ngIf="(user$ | async) as _user; else noUser">
+      <ng-container *ngIf="_user.firstName && _user.firstName.length > 0; else noUser">
+        <a href="/me" class="px-2 text-dark">{{ _user.firstName }} {{ _user.lastName }}</a>
+      </ng-container>
     </ng-container>
+    
+    <ng-template #noUser>
+      <a href="/me" class="px-2 text-dark">حساب کاربری</a>
+    </ng-template>
 
-    <a href="/me" class="px-2 text-dark">حساب کاربری</a>
 
   </div>
 </nav>

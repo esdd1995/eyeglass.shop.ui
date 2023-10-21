@@ -26,7 +26,6 @@ export class NavbarComponent implements OnInit {
   }
   logout() {
     this.auth.logout();
-    document.location.reload();
   }
   goToBasket(){
     this.router.navigate(['/basket']);
