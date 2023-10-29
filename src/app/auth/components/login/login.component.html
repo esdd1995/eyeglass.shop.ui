@@ -1,24 +1,31 @@
 <div class="container-fluid bg-grey py-5">
-    <div class="container">
+    <div class="container ">
 
-        <div class="row d-flex justify-content-center">
-            <form [formGroup]="form">
-                <div *ngIf="loginState == 0" class="col-md-4">
+        <div class="row d-flex justify-content-center ">
+            <form class="d-flex justify-content-center" [formGroup]="form">
+                <div *ngIf="loginState == 0" class="col-md-4 bg-white p-3" style="border-radius: 20px;">
 
                     <div class="row g-3">
-                        <p class="text-dark text-center fs-7">شماره موبایل خود را برای دریافت کد وارد کنید</p>
+                        <p class="text-blue p-3 text-center fs-lb">شماره موبایل خود را برای دریافت رمز یکبارمصرف وارد کنید</p>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="text-blue  text-left fs-m">نمونه: ۰۹۱۱۲۲۲۳۳۴۴</div>
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" formControlName="phoneNumber"
-                                    class="form-control rounded1 bg-white border-0" placeholder="شماره موبایل" />
+                                (input)="checkPhoneNumber()"
+                                    class="form-control rounded1 bg-grey border-0" placeholder="شماره موبایل" />
                                 <label class="pt-1 mt-1" for="phoneNumber">شماره موبایل</label>
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 mb-4">
                             <button (click)="requestVerificationCode()" class="btn btn-primary btn-blue  w-100 py-3"
-                                type="submit">
-                                <a style="font-size: x-large;"> ارسال کد</a>
+                                type="submit"
+                                [disabled]="!isValidPhoneNumber">
+                                <a style="font-size: x-large;">دریافت رمز</a>
                             </button>
                         </div>
                         <!-- <div class="col-md-12 text-center">
@@ -55,7 +62,7 @@
 
                         <div class="col-12">
                             <button (click)="login()" class="btn btn-primary btn-blue  w-100 py-3" type="submit">
-                                <a style="font-size: x-large;">ارسال کد</a>
+                                <a style="font-size: x-large;">ورود</a>
                             </button>
                         </div>
                         <!-- <div class="col-md-12 text-center">

@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
     hasError: boolean;
     loginState: number = 0
+    isValidPhoneNumber: boolean = false
     private unsubscribe: Subscription[] = [];
     constructor
         (
@@ -43,7 +44,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe((user: UserModel | undefined) => {
                 if (user) {
-                    if (user.isNew){
+                    if (user.isNew) {
                         this.router.navigate(['/me'])
                     }
                     // this.router.navigate([this.returnUrl]);
@@ -70,7 +71,9 @@ export class LoginComponent implements OnInit {
             });
         this.unsubscribe.push(subscr);
     }
-    onPhoneNumberInput() {
-
-    }
+    checkPhoneNumber() {
+        const phoneNumber = this.form.value.phoneNumber;
+        var regex = new RegExp("^(\\+98|0)?9\\d{9}$");
+        this.isValidPhoneNumber = regex.test(phoneNumber);
+    };
 }

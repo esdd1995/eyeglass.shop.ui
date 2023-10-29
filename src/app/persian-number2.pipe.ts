@@ -6,13 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PersianNumberPipe2 implements PipeTransform {
   transform(value: number): string {
     // Convert the number to a string and replace Latin digits with Persian digits
-    const numberWithCommas = this.addCommas(value);
-    const persianDigits = String(numberWithCommas).replace(/[0-9]/g, (digit) => {
+    // const numberWithCommas = this.addCommas(value);
+    const persianDigits = String(value).replace(/[0-9]/g, (digit) => {
       return this.getPersianDigit(parseInt(digit, 10));
     });
 
-    // Add commas as thousands separators
-    
 
     return persianDigits;
   }

@@ -1282,7 +1282,27 @@ input[type='range']::-moz-range-track {
 .fs-7 {
     font-size: 25px;
 }
-
+.fs-s {
+    font-size: 18px;
+}
+.fs-sb {
+    font-size: 18px;
+    font-weight: bold;
+}
+.fs-m {
+    font-size: 20px;
+}
+.fs-mb {
+    font-size: 20px;
+    font-weight: bold;
+}
+.fs-l {
+    font-size: 25px;
+}
+.fs-lb {
+    font-size: 25px;
+    font-weight: bold;
+}
 .fs-8 {
     font-size: 25px;
     font-weight: bold;

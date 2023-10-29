@@ -20,6 +20,7 @@ import { AuthService } from './auth/services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './auth/components/user-profile/user-profile.component';
 import { PersianNumberPipe2 } from './persian-number2.pipe';
+import { PhoneNumberDirective } from './phone-number.directive';
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -45,7 +46,8 @@ function appInitializer(authService: AuthService) {
     BasketComponent,
     AddOrderComponent,
     LoginComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    PhoneNumberDirective
   ],
   imports: [
     BrowserModule,
