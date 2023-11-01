@@ -34,20 +34,22 @@
                   <p class="text-dark text-end mb-0 fs-7"><span><img src="../../../../assets/img/icon/i12.png"
                         class="icon-resize px-2 " alt="">
                     </span>اطلاعات شخصی </p>
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <input formControlName="firstName" type="text" class="form-control rounded3 bg-white border-0"
-                        id="firstName" placeholder="Your Name" />
-                      <label for="firstName">نام</label>
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <input formControlName="firstName" type="text" class="form-control rounded3 bg-white border-0"
+                          id="firstName" placeholder="Your Name" required [ngClass]="{'is-invalid': form.get('firstName')?.invalid && (form.get('firstName')?.dirty || form.get('firstName')?.touched)}" />
+                        <label for="firstName">نام</label>
+                        <div class="invalid-feedback">نام الزامی است.</div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-floating">
-                      <input formControlName="lastName" type="text" class="form-control rounded3 bg-white border-0"
-                        id="lastName" placeholder="Your Name" />
-                      <label for="lastName">نام‌ خانوادگی</label>
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <input formControlName="lastName" type="text" class="form-control rounded3 bg-white border-0"
+                          id="lastName" placeholder="Your Name" required [ngClass]="{'is-invalid': form.get('lastName')?.invalid && (form.get('lastName')?.dirty || form.get('lastName')?.touched)}" />
+                        <label for="lastName">نام‌ خانوادگی</label>
+                        <div class="invalid-feedback">نام‌ خانوادگی الزامی است.</div>
+                      </div>
                     </div>
-                  </div>
                   <div class="col-md-12">
                     <div class="form-floating">
                       <input formControlName="phoneNumber" type="text" class="form-control rounded3 bg-white border-0"

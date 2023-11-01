@@ -6,7 +6,8 @@
                 <div *ngIf="loginState == 0" class="col-md-4 bg-white p-3" style="border-radius: 20px;">
 
                     <div class="row g-3">
-                        <p class="text-blue p-3 text-center fs-lb">شماره موبایل خود را برای دریافت رمز یکبارمصرف وارد کنید</p>
+                        <p class="text-blue p-3 text-center fs-lb">شماره موبایل خود را برای دریافت رمز یکبارمصرف وارد
+                            کنید</p>
                         <br>
                         <br>
                         <br>
@@ -14,19 +15,24 @@
                         <div class="text-blue  text-left fs-m">نمونه: ۰۹۱۱۲۲۲۳۳۴۴</div>
                         <div class="col-md-12">
                             <div class="form-floating">
-                                <input type="text" formControlName="phoneNumber"
-                                (input)="checkPhoneNumber()"
+                                <input type="text" formControlName="phoneNumber" (input)="checkPhoneNumber()"
                                     class="form-control rounded1 bg-grey border-0" placeholder="شماره موبایل" />
                                 <label class="pt-1 mt-1" for="phoneNumber">شماره موبایل</label>
                             </div>
                         </div>
 
                         <div class="col-12 mb-4">
-                            <button (click)="requestVerificationCode()" class="btn btn-primary btn-blue  w-100 py-3"
-                                type="submit"
-                                [disabled]="!isValidPhoneNumber">
-                                <a style="font-size: x-large;">دریافت رمز</a>
+                            <button (click)="requestVerificationCode()" class="btn btn-primary btn-blue w-100 py-3"
+                                type="submit" [disabled]="!isValidPhoneNumber || isLoading">
+                                <ng-container *ngIf="isLoading; else content">
+                                    <i class="fa fa-spinner fa-spin p-1"></i> <a style="font-size: x-large;">لطفا صبر
+                                        کنید</a>
+                                </ng-container>
+                                <ng-template #content>
+                                    <a style="font-size: x-large;">دریافت رمز</a>
+                                </ng-template>
                             </button>
+
                         </div>
                         <!-- <div class="col-md-12 text-center">
                 <a href="" class="text-blue text-center">رمزت رو فراموش کردی؟</a>
@@ -61,13 +67,25 @@
 
 
                         <div class="col-12">
-                            <button (click)="login()" class="btn btn-primary btn-blue  w-100 py-3" type="submit">
-                                <a style="font-size: x-large;">ورود</a>
+                            <button (click)="login()" class="btn btn-primary btn-blue  w-100 py-3"
+                                [disabled]="isLoading" type="submit">
+                                <ng-container *ngIf="isLoading; else content">
+                                    <i class="fa fa-spinner fa-spin p-1"></i> <a style="font-size: x-large;">لطفا صبر
+                                        کنید</a>
+                                </ng-container>
+                                <ng-template #content>
+                                    <a style="font-size: x-large;">ورود</a>
+                                </ng-template>
                             </button>
                         </div>
-                        <!-- <div class="col-md-12 text-center">
-                <a href="" class="text-blue text-center">رمزت رو فراموش کردی؟</a>
-              </div> -->
+                        
+                        <div class="col-md-12 text-center">
+                            <button (click)="setLoginState(0)" class="link-button" [disabled]="disableLink">تغییر شماره | دریافت مجدد رمز</button>
+                            <div *ngIf="disableLink" class="text-center">
+                              {{ remainingTime }} <i class="fa fa-spinner fa-spin p-1"></i>
+                            </div>
+                          </div>
+                          
                     </div>
 
                     <!-- <div class="col-12 py-3">

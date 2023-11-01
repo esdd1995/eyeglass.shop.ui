@@ -21,6 +21,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './auth/components/user-profile/user-profile.component';
 import { PersianNumberPipe2 } from './persian-number2.pipe';
 import { PhoneNumberDirective } from './phone-number.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
+import { CustomToastComponent } from './general/custom-toast/custom-toast.component';
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -47,15 +50,22 @@ function appInitializer(authService: AuthService) {
     AddOrderComponent,
     LoginComponent,
     UserProfileComponent,
-    PhoneNumberDirective
+    PhoneNumberDirective,
+    CustomToastComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     WebcamSnapshotModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot({
+      closeButton: true,
+      timeOut: 80000, // 8 seconds
+      progressBar: true,
+    }),
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

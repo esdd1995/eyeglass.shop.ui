@@ -1282,27 +1282,34 @@ input[type='range']::-moz-range-track {
 .fs-7 {
     font-size: 25px;
 }
+
 .fs-s {
     font-size: 18px;
 }
+
 .fs-sb {
     font-size: 18px;
     font-weight: bold;
 }
+
 .fs-m {
     font-size: 20px;
 }
+
 .fs-mb {
     font-size: 20px;
     font-weight: bold;
 }
+
 .fs-l {
     font-size: 25px;
 }
+
 .fs-lb {
     font-size: 25px;
     font-weight: bold;
 }
+
 .fs-8 {
     font-size: 25px;
     font-weight: bold;
@@ -1327,7 +1334,8 @@ input[type='range']::-moz-range-track {
 .rounded1 {
     border-radius: 1rem;
 }
-.bg-grey{
+
+.bg-grey {
     background-color: #737373;
 }
 
@@ -1410,8 +1418,8 @@ input[type='range']::-moz-range-track {
 }
 
 .img-resize {
-     height: 50%;
-     max-width: 85%;
+    height: 50%;
+    max-width: 85%;
 }
 
 .img-resize2 {
@@ -1681,16 +1689,19 @@ element.style {}
     background-color: #006EA5 !important;
     color: #fff;
 }
+
 .min-w-200 {
     min-width: 200px
 }
-.card-image-container{
-    height: 12rem !important;display: grid;
+
+.card-image-container {
+    height: 12rem !important;
+    display: grid;
     justify-content: center;
 }
-.card-image-container2{
-    
-}
+
+.card-image-container2 {}
+
 .bordered {
     border: 1px solid #CDCDCD;
     border-radius: 1.5rem;
@@ -1723,7 +1734,8 @@ element.style {}
     margin-top: -1px;
     border-top: 2px solid #CDCDCD;
 }
-.main-image{
+
+.main-image {
     display: flex;
     justify-content: center;
     visibility: visible;
@@ -1731,6 +1743,7 @@ element.style {}
     align-items: flex-start;
     flex-wrap: wrap;
 }
+
 .mt-l1 {
     margin-top: 7rem;
 }
@@ -1764,3 +1777,30 @@ element.style {}
 .hover1:hover {
     border: 1px solid black;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+button.link-button {
+    background: none;
+    border: none;
+    color: blue;
+    /* Link color */
+    text-decoration: underline;
+    /* Underline the text like a link */
+    cursor: pointer;
+    /* Show a pointer cursor on hover */
+    padding: 0;
+    /* Remove padding to make it look like plain text */
+}
+
+button.link-button:hover {
+    text-decoration: none;
+    /* Remove underline on hover */
+}
+button.link-button:disabled {
+    color: gray; /* Change the color to gray when disabled */
+    cursor: not-allowed; /* Change the cursor to not-allowed when disabled */
+    text-decoration: none; /* Remove underline when disabled */
+  }
