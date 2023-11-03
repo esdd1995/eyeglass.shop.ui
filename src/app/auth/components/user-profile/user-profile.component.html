@@ -105,7 +105,46 @@
   <div class="container">
     <div class="row g-5 d-flex justify-content-center">
       <div class="col-md-9">
-        <p class="text-dark text-end mb-3 fs-7"><span><img src="img/icon/i12.png" class="icon-resize px-2 " alt="">
+        <p class="text-dark text-end mb-3 fs-7"><span><img src="../../../../assets/img/icon/i12.png" class="icon-resize px-2 " alt="">
+          </span>آدرس ها</p>
+          <div class="m-2">
+          <a (click)="openModal(editModal)" class="text-dark text-end mb-3">+ افزودن آدرس جدید</a></div>
+        <div class="table-responsive rounded1 ">
+          <table class="table rounded1">
+            <thead class="bg-blue rounded1">
+              <tr>
+                <th class="text-center"></th>
+                <th class="text-center">عنوان</th>
+                <th class="text-center">آدرس دقیق</th>
+                <th class="text-center">کدپستی</th>
+                <th class="text-center">نام و نام خانوادگی</th>
+                <th class="text-center">ویرایش</th>
+              </tr>
+            </thead>
+            <tbody class="bg-grey rounded1">
+              <tr class="bg-grey">
+                <td class="text-center">۱</td>
+                <td class="text-center">خانه</td>
+                <td class="text-center">خیابان مطهری بن بست اول تهران -تهران</td>
+                <td class="text-center">1234567891</td>
+                <td class="text-blue text-center">میلاد حمیدی</td>
+                <td class="text-blue text-center">
+                  <a href="">
+                    <i class="fa fa-chevron-left"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid bg-white py-5">
+  <div class="container">
+    <div class="row g-5 d-flex justify-content-center">
+      <div class="col-md-9">
+        <p class="text-dark text-end mb-3 fs-7"><span><img src="../../../../assets/img/icon/i12.png" class="icon-resize px-2 " alt="">
           </span>سفارشات</p>
         <div class="table-responsive rounded1 ">
           <table class="table rounded1">
@@ -159,4 +198,38 @@
       </div>
     </div>
   </div>
+</div>
+
+<div>
+  <ng-template #editModal let-c="close" let-d="dismiss">
+      <div class="modal-header">
+          <h4 class="modal-title">آدرس جدید</h4>
+          <button type="button" class="btn btn-icon" (click)="d('Cross click')">
+              <i class="fa-solid fa-xmark"></i>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <div class="row mt-2">
+                  <div class="col-lg-4 col-md-4">
+                    
+                  </div>
+                  <div class="col-lg-4 col-md-4">
+                    
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <ng-container>
+              <span class="spinner spinner-primary ml-5"></span>
+          </ng-container>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">
+              بستن
+          </button>
+          <button type="button" class="btn btn-primary btn-sm">
+              ثبت
+          </button>
+      </div>
+  </ng-template>
 </div>
