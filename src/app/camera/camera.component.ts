@@ -11,20 +11,16 @@ export class CameraComponent implements OnInit {
   @Output()
   public pictureTaken = new EventEmitter<WebcamImage>();
 
-  // toggle webcam on/off
   public showWebcam = true;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
   public deviceId: string;
   public videoOptions: MediaTrackConstraints = {
-    // width: {ideal: 1024},
-    // height: {ideal: 576}
   };
   public errors: WebcamInitError[] = [];
 
   // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
-  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
   public ngOnInit(): void {
@@ -47,19 +43,14 @@ export class CameraComponent implements OnInit {
   }
 
   public showNextWebcam(directionOrDeviceId: boolean|string): void {
-    // true => move forward through devices
-    // false => move backwards through devices
-    // string => move to device with given deviceId
     this.nextWebcam.next(directionOrDeviceId);
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
     this.pictureTaken.emit(webcamImage);
   }
 
   public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
     this.deviceId = deviceId;
   }
 

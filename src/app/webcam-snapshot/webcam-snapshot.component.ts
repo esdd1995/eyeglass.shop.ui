@@ -19,7 +19,7 @@ export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
   WIDTH = 640;
   HEIGHT = 480;
   RATIO = 640 / 480
-  captureCount: number = 2; // the number of captures
+  captureCount: number = 10; // the number of captures
   captureIntervals: number = 700; // in milliseconds
   productId: number;
   ButtonText = 'شروع';
@@ -73,7 +73,6 @@ export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
   async capture() {
     this.initDeviceWidthHeight();
     this.captureWithInterval(this.captureCount, this.captureIntervals, () => {
-      // All repetitions are complete, so now you can upload the captured photos
       this.uploadCapturedPhotos();
     });
   }
@@ -86,34 +85,21 @@ export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
         // Flash the canvas white
         this.flashCanvasWhite();
 
-        // Set 'isCaptured' to true after the specified interval
         setTimeout(() => {
           this.isCaptured = true;
           this.dispalayTextOnCanvas(`${currentRepetition + 1} از ${repetitions}`);
-
-          // Capture the current frame to the canvas after the specified interval
           setTimeout(() => {
             this.isCaptured = true;
             const video = this.webcam.nativeVideoElement;
             const canvas = this.canvas.nativeElement;
             const ctx = canvas.getContext("2d");
-
-
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
             this.captures.push(canvas.toDataURL('image/jpeg'));
-
-            // Set 'isCaptured' to false after the specified interval
             setTimeout(() => {
               this.isCaptured = false;
               currentRepetition++;
-
-              // Repeat the capture step
               captureStep();
-
-              // Check if all repetitions are complete
               if (currentRepetition === repetitions) {
-                // Call the onComplete callback function
                 onComplete();
               }
             }, interval * 1.2);
@@ -122,7 +108,6 @@ export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
       }
     };
 
-    // Start the capture process
     captureStep();
   }
   setPhoto(idx: number) {
@@ -141,7 +126,6 @@ export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
     const canvas = this.canvas.nativeElement;
     const ctx = canvas.getContext("2d");
 
-    // Flash the canvas white by drawing a white rectangle over it
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
@@ -150,27 +134,20 @@ export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
     const ctx = canvas.getContext("2d");
 
     if (ctx) {
-      // Save the current canvas state (optional but recommended)
       ctx.save();
 
-      // Set the fill color to white
       ctx.fillStyle = "white";
 
-      // Clear the entire canvas with a white rectangle
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Set text properties
       ctx.font = "24px Arial";
-      ctx.fillStyle = "black"; // Text color
-      ctx.textAlign = "center"; // Text alignment
+      ctx.fillStyle = "black"; 
+      ctx.textAlign = "center"; 
 
-      // Display text in the center of the canvas
       const x = canvas.width / 2;
       const y = canvas.height / 2;
       ctx.fillText(text, x, y);
 
-      // Restore the canvas state (optional but recommended)
       ctx.restore();
     } else {
       console.error("Canvas context is null.");
@@ -182,7 +159,6 @@ export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
     const canvas = this.canvas.nativeElement;
     const ctx = canvas.getContext("2d");
 
-    // Clear the canvas by drawing a transparent rectangle over it
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -196,12 +172,9 @@ export class WebcamSnapshotComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // Create an array of File objects from the captured photos
     const files: File[] = this.captures.map((dataURL, index) => {
-      // Convert data URL to Blob
       const blob = this.dataURItoBlob(dataURL);
 
-      // Create a File from the Blob
       return new File([blob], `${generateFileName(index.toString())}.jpg`, { type: 'image/jpeg' });
     });
 

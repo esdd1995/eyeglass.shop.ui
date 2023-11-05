@@ -42,26 +42,20 @@ export class HttpHeadersInterceptor implements HttpInterceptor {
         return next.handle(cloned);
       }
       if (typeof req.body === 'object' && req.body !== null) {
-        // Define your common headers
         const headers = req.headers
           .set('accept', 'text/plain')
           .set('Content-Type', 'application/json-patch+json');
 
-        // Define your common request options
         const requestOptions = {
           headers: headers,
-          responseType: 'json' as 'json', // Set the expected response type to text/plain
+          responseType: 'json' as 'json',
         };
 
-        // Clone the original request and apply headers and options
         const modifiedReq = req.clone(requestOptions);
 
-        // Pass the modified request to the next handler
         return next.handle(modifiedReq);
       }
     }
-
-    // Continue with the original request
     return next.handle(req);
   }
   private getAuthFromLocalStorage(): AuthModel | undefined {

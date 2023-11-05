@@ -1,6 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    overflow-x: hidden;
+}
 
-/* position */
 .toast-center-center {
     top: 50%;
     left: 50%;
@@ -17,7 +18,7 @@
     width: 100%;
     /* Let the toast width be determined by its content */
     text-align: center
-    /* Center-align the text content */
+        /* Center-align the text content */
 }
 
 
@@ -63,7 +64,7 @@
 .toast-title {
     color: #ffffff;
     font-size: 16pt;
-    font-weight:900;
+    font-weight: 900;
 }
 
 .toast-message {
@@ -242,7 +243,9 @@ button.toast-close-button {
         width: 25em;
     }
 }
+
 @media all and (max-width: 768px) {
+
     .toast-container.toast-top-center .toast,
     .toast-container.toast-bottom-center .toast {
         width: 96%;
@@ -250,6 +253,7 @@ button.toast-close-button {
         margin-right: auto;
     }
 }
+
 /* For large screens */
 @media (min-width: 1200px) {
     .toast-container {

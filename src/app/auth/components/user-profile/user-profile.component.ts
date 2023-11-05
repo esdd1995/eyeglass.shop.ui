@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 import { first } from 'rxjs';
 import { ToastService } from 'src/app/toast.service';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,7 +20,7 @@ export class UserProfileComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private toastService: ToastService,
-    private modalService: NgbModal,
+    private modalService: AuthService,
     private router: Router,) {
     this.form = this.fb.group({
       firstName: [''],
@@ -144,6 +143,6 @@ export class UserProfileComponent implements OnInit {
     }
   }
   openModal(content: any) {
-    this.modalService.open(content);
+    // this.modalService.open(content);
   }
 }

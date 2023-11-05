@@ -163,12 +163,12 @@ body {
 }
 
 .header-bg3 {
-    background: url(../img/hero4.png) center center no-repeat;
+    background: url(../img/B1.png) center center no-repeat;
     background-size: cover;
 }
 
 .header-bg4 {
-    background: url(../img/hero5.png) center center no-repeat;
+    background: url(../img/B2.png) center center no-repeat;
     background-size: cover;
 }
 
@@ -985,7 +985,9 @@ a.toggle-menu {
 
 @media (max-width: 768px) {
     .testimonial-carousel .owl-item.center .testimonial-text {
-        width: 500px !important;
+        display: flex;
+        min-width: fit-content;
+        justify-content: center;
         box-shadow: 3px 3px 5px rgba(184, 186, 187, 0.391);
         margin-right: -6rem;
         background: #F2F2F2;

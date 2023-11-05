@@ -8,7 +8,6 @@ import { FooterComponent } from './footer/footer.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { ProductCardComponent } from './product/product-card/product-card.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { VideoCaptureComponent } from './video-capture/video-capture.component';
 import { HttpHeadersInterceptor } from './http-headers.interceptor';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { PersianNumberPipe } from './persian-number.pipe';
@@ -23,7 +22,6 @@ import { PersianNumberPipe2 } from './persian-number2.pipe';
 import { PhoneNumberDirective } from './phone-number.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
-import { CustomToastComponent } from './general/custom-toast/custom-toast.component';
 function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
@@ -42,7 +40,6 @@ function appInitializer(authService: AuthService) {
     FooterComponent,
     ProductDetailComponent,
     ProductCardComponent,
-    VideoCaptureComponent,
     ProductListComponent,
     PersianNumberPipe,
     PersianNumberPipe2,
@@ -51,7 +48,6 @@ function appInitializer(authService: AuthService) {
     LoginComponent,
     UserProfileComponent,
     PhoneNumberDirective,
-    CustomToastComponent,
   ],
   imports: [
     BrowserModule,

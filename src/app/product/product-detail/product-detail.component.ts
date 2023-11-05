@@ -158,7 +158,6 @@ export class ProductDetailComponent implements OnInit {
     const deltaX = event.touches[0].clientX - this.touchStartX;
     const deltaY = event.touches[0].clientY - this.touchStartY;
 
-    // Adjust the threshold values as needed
     if (this.isDescendantOrSelf(scrollableDiv, event.target as Node)) {
       if (Math.abs(deltaX) > 10 && Math.abs(deltaY) < 10) {
         // Horizontal gesture with significant movement (more than 10 pixels)
@@ -181,7 +180,6 @@ export class ProductDetailComponent implements OnInit {
     this.touchStartY = null;
   }
 
-  // Start the gesture and call the specified function repeatedly
   private startGesturing(callback: () => void) {
     if (!this.isGesturing) {
       this.isGesturing = true;
@@ -189,7 +187,6 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  // Stop the gesture
   private stopGesturing() {
     if (this.isGesturing) {
       this.isGesturing = false;
@@ -197,7 +194,6 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  // Mouse scroll event handler
   private scrollTimeout: number | null = null;
   private scrollDistanceThreshold = 100; // Adjust this threshold as needed
 
@@ -236,7 +232,6 @@ export class ProductDetailComponent implements OnInit {
 function getNextIndex<T>(arr: T[], currentElement: T): number {
   const currentIndex = arr.indexOf(currentElement);
   if (currentIndex === -1) {
-    // Element not found in the array
     return -1; // You can choose to handle this case differently if needed
   }
 
@@ -246,11 +241,9 @@ function getNextIndex<T>(arr: T[], currentElement: T): number {
 function getPastIndex<T>(arr: T[], currentElement: T): number {
   const currentIndex = arr.indexOf(currentElement);
   if (currentIndex === -1) {
-    // Element not found in the array
-    return -1; // You can choose to handle this case differently if needed
+    return -1; 
   }
 
-  // Calculate the past index while ensuring it wraps to the last element if the current element is the first one
   const pastIndex = currentIndex === 0 ? arr.length - 1 : currentIndex - 1;
   return pastIndex;
 }
